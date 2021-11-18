@@ -1,5 +1,7 @@
+import { Login } from './components/login';
+
 function App() {
-  return <div className="flex">hhi</div>;
+  return <Login />;
 }
 
 export default App;

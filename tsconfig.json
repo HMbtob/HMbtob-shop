@@ -14,15 +14,15 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
-    "baseUrl": ".",
-    "paths": {
-      "@components/*": ["./src/components/*"],
-      "@utils/*": ["./src/utils/*"],
-      "@hooks/*": ["./src/hooks/*"],
-      "@models/*": ["./src/models/*"]
-    }
+    "jsx": "react-jsx"
+    // "baseUrl": ".",
+    // "paths": {
+    //   "@components/*": ["./src/components/*"],
+    //   "@utils/*": ["./src/utils/*"],
+    //   "@hooks/*": ["./src/hooks/*"],
+    //   "@models/*": ["./src/models/*"]
+    // }
   },
-  "include": ["src"],
+  "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
 }
