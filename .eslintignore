@@ -1,0 +1,8 @@
+/node_modules
+.eslintrc.json
+.firebaserc
+.gitignore
+craco.config.js
+firebase.json
+tailwind.config.js
+tsconfig.json
