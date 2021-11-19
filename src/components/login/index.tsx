@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import { LogInForm } from '../../models/login';
 import { AuthContext } from '../../hooks/useAuth';
+// import { linkTo } from '../../utils/utils';
 
 export function Login() {
   const authContext = useContext(AuthContext);
@@ -73,7 +74,9 @@ export function Login() {
         </div>
         <div className="flex flex-col lg:flex-row mt-5 w-80 justify-start">
           <div className="text-gray-700">{'New to INTERASIA ?'}</div>
-          <button className=" font-bold cursor-pointer text-gray-800">
+          <button
+            // onClick={() => linkTo('signup')}
+            className=" font-bold cursor-pointer text-gray-800">
             {' Sign Up with e-mail !'}
           </button>
         </div>
