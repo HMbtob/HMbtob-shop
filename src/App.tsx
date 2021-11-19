@@ -1,7 +1,13 @@
 import { Login } from './components/login';
+import { AuthContext, useAuth } from './hooks/useAuth';
 
 function App() {
-  return <Login />;
+  const authContext = useAuth();
+  return (
+    <AuthContext.Provider value={authContext}>
+      {authContext?.authState.isLoading ? 'hi' : <Login />}
+    </AuthContext.Provider>
+  );
 }
 
 export default App;
