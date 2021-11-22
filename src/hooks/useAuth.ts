@@ -9,25 +9,25 @@ import {
 } from 'firebase/auth';
 import { firebaseApp } from '../firebase';
 import { AuthContextType, LogInForm } from '../models/login';
+import { useNavigate } from 'react-router';
 
 export const AuthContext = React.createContext<AuthContextType | null>(null);
 
 export function useAuth() {
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState<boolean>(false);
   const [authUser, setAuthUser] = useState<object | null>(null);
   const auth = getAuth(firebaseApp);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getAuth = async () => {
       setLoading(true);
-      onAuthStateChanged(auth, (user) => {
+      await onAuthStateChanged(auth, (user) => {
         user ? setAuthUser(user) : setAuthUser(null);
       });
-
-      setLoading(false);
     };
     getAuth();
-    console.log(authUser);
+    setLoading(false);
   }, []);
 
   const logIn = useCallback(async (form: LogInForm) => {
@@ -36,7 +36,6 @@ export function useAuth() {
       setPersistence(auth, browserLocalPersistence).then(async () => {
         const user = await signInWithEmailAndPassword(auth, email, password);
         setAuthUser(user);
-        console.log(user);
       });
     } catch (e) {
       console.log(e);
@@ -49,6 +48,7 @@ export function useAuth() {
 
   const logOut = useCallback(async () => {
     await signOut(auth);
+    await navigate('/');
     return null;
   }, []);
   return {

@@ -3,11 +3,12 @@ import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import { LogInForm } from '../../models/login';
 import { AuthContext } from '../../hooks/useAuth';
-// import { linkTo } from '../../utils/utils';
+import { useNavigate } from 'react-router';
+import { forgotPassword } from '../../utils/signUpUtils';
 
 export function Login() {
   const authContext = useContext(AuthContext);
-
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -69,13 +70,15 @@ export function Login() {
           className="text-lg font-semibold bg-gray-400 w-11/12 lg:w-80 p-2 rounded mt-3 text-white">
           Sign In
         </button>
-        <div className="text-right text-gray-800 w-11/12 mt-3 lg:w-80 text-xs cursor-pointer">
+        <div
+          onClick={() => forgotPassword()}
+          className="text-right text-gray-800 w-11/12 mt-3 lg:w-80 text-xs cursor-pointer">
           forgot password?
         </div>
         <div className="flex flex-col lg:flex-row mt-5 w-80 justify-start">
           <div className="text-gray-700">{'New to INTERASIA ?'}</div>
           <button
-            // onClick={() => linkTo('signup')}
+            onClick={() => navigate('/signup')}
             className=" font-bold cursor-pointer text-gray-800">
             {' Sign Up with e-mail !'}
           </button>
