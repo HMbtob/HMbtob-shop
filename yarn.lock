@@ -1781,6 +1781,11 @@
   dependencies:
     "@hapi/hoek" "^8.3.0"
 
+"@heroicons/react@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@heroicons/react/-/react-1.0.5.tgz#2fe4df9d33eb6ce6d5178a0f862e97b61c01e27d"
+  integrity sha512-UDMyLM2KavIu2vlWfMspapw9yii7aoLwzI2Hudx4fyoPwfKfxU8r3cL8dEBXOjcLG0/oOONZzbT14M1HoNtEcg==
+
 "@hookform/error-message@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@hookform/error-message/-/error-message-2.0.0.tgz#9b1b037fd816ea9b1531c06aa7fab5f5154aa740"
@@ -11568,6 +11573,11 @@ table@^6.0.9:
     slice-ansi "^4.0.0"
     string-width "^4.2.3"
     strip-ansi "^6.0.1"
+
+tailwind-scrollbar-hide@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/tailwind-scrollbar-hide/-/tailwind-scrollbar-hide-1.1.5.tgz#4aa488dc3dbfd39929f7190c8301ec02e23cface"
+  integrity sha512-+an0OtSZQgvL5cE66A6WOaOHjjv8nGEJJfajnbzgKmo77UFOnspsViOdqp/ySu2Q3cjXk2BK4H7y0p2rmc0rVw==
 
 "tailwindcss@npm:@tailwindcss/postcss7-compat@^2.2.17":
   version "2.2.17"
