@@ -21,7 +21,6 @@ export function Header({ setQuery }: setQueryProps) {
         <div
           onClick={() => {
             authContext?.authHandler.logOut();
-            navigate('/');
           }}
           className="text-sm font-mono font-bold text-center text-gray-200 bg-blue-900 cursor-pointer">
           Logout

@@ -7,7 +7,7 @@ import {
   signOut,
   browserLocalPersistence
 } from 'firebase/auth';
-import { firebaseApp } from '../firebase';
+import { db, firebaseApp } from '../firebase';
 import { AuthContextType, LogInForm } from '../models/login';
 import { useNavigate } from 'react-router';
 
@@ -15,19 +15,28 @@ export const AuthContext = React.createContext<AuthContextType | null>(null);
 
 export function useAuth() {
   const [isLoading, setLoading] = useState<boolean>(false);
-  const [authUser, setAuthUser] = useState<object | null>(null);
+  const [authUser, setAuthUser] = useState<object | null | undefined>(null);
+  const [exchangeRate, setExchangeRate] = useState<object | undefined>({});
   const auth = getAuth(firebaseApp);
   const navigate = useNavigate();
 
   useEffect(() => {
     const getAuth = async () => {
       setLoading(true);
-      await onAuthStateChanged(auth, (user) => {
-        user ? setAuthUser(user) : setAuthUser(null);
+      await onAuthStateChanged(auth, async (user) => {
+        const email = await user?.email?.toString();
+        await db
+          .collection('accounts')
+          .doc(email)
+          .onSnapshot((snapshot) => setAuthUser(snapshot.data()));
       });
+      const rates = await db.collection('exchangeRate').doc('rates').get();
+      await setExchangeRate(rates.data());
     };
     getAuth();
+    console.log(exchangeRate);
     setLoading(false);
+    return;
   }, []);
 
   const logIn = useCallback(async (form: LogInForm) => {
@@ -37,6 +46,7 @@ export function useAuth() {
         const user = await signInWithEmailAndPassword(auth, email, password);
         setAuthUser(user);
       });
+      return;
     } catch (e) {
       console.log(e);
       setAuthUser(null);
@@ -46,15 +56,16 @@ export function useAuth() {
     }
   }, []);
 
-  const logOut = useCallback(async () => {
-    await signOut(auth);
-    await navigate('/');
+  const logOut = useCallback(() => {
+    signOut(auth);
+    navigate('/');
     return null;
   }, []);
   return {
     authState: {
       isLoading,
-      authUser
+      authUser,
+      exchangeRate
     },
     authHandler: {
       logIn,

@@ -1,6 +1,11 @@
 import { Dispatch, SetStateAction } from 'react';
 
-export interface setCatProps {
-  cat: string;
-  setCat: Dispatch<SetStateAction<string>>;
+export interface SetCategoryTypes {
+  category: string;
+  setCategory: Dispatch<SetStateAction<string>>;
+}
+
+export interface ProductsTypes {
+  preOrderProducts: Array<object>;
+  commonProducts: Array<object>;
 }

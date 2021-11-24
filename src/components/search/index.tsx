@@ -8,7 +8,7 @@ export function Search({ setQuery }: setQueryProps) {
 
   const onSubmit = useCallback(async (data) => {
     console.log(data);
-    return;
+    return setQuery('');
   }, []);
 
   return (

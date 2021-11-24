@@ -11,9 +11,7 @@ function App() {
   console.log(query);
   return (
     <AuthContext.Provider value={authContext}>
-      {authContext?.authState.isLoading ? (
-        <div>스피너</div>
-      ) : authContext?.authState.authUser ? (
+      {authContext?.authState.authUser ? (
         <>
           <Header setQuery={setQuery} />
           <Routes>
