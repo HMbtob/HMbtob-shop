@@ -5,10 +5,11 @@ export interface LogInForm {
 export interface AuthContextType {
   authState: {
     isLoading: boolean;
-    authUser: object | null;
+    authUser: object | null | undefined | string;
+    exchangeRate: any;
   };
   authHandler: {
     logIn: (form: LogInForm) => Promise<string | null | undefined | object>;
-    logOut: () => Promise<null>;
+    logOut: () => null;
   };
 }
