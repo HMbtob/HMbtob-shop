@@ -23,6 +23,13 @@ export function productsFetch(setter: any, sign: WhereFilterOp, category?: strin
   }
 }
 
+// Fetching Notice
+export function noticeFetch(setter: any) {
+  db.collection('notice').onSnapshot((snapshot) =>
+    setter(snapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() })))
+  );
+}
+
 // Categories for common product
 export const categories = [
   { cd: 'cd' },
