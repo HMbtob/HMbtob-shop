@@ -8,7 +8,6 @@ import { B2bStore } from './components/b2bstore';
 function App() {
   const authContext = useAuth();
   const [query, setQuery] = useState<string>('');
-  console.log(query);
   return (
     <AuthContext.Provider value={authContext}>
       {authContext?.authState.authUser ? (
@@ -22,6 +21,7 @@ function App() {
                 <B2bStore
                   user={authContext?.authState.authUser}
                   exchangeRate={authContext?.authState.exchangeRate}
+                  query={query}
                 />
               }
             />
