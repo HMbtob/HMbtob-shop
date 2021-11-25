@@ -2,26 +2,19 @@ import { db } from '../firebase';
 import { WhereFilterOp } from '@firebase/firestore-types';
 
 // Fetching product by date
-export async function productsFetch(
-  setter: any,
-  sign: WhereFilterOp,
-  category?: string
-): Promise<void> {
+export function productsFetch(setter: any, sign: WhereFilterOp, category?: string): void {
   const today = new Date();
 
   if (category) {
-    await db
-      .collection('products')
+    db.collection('products')
       .where('preOrderDeadline', sign, today)
       .where('exposeToB2b', '==', '노출')
       .where('category', '==', category)
-      .limit(5)
       .onSnapshot((snapshot) =>
         setter(snapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() })))
       );
   } else {
-    await db
-      .collection('products')
+    db.collection('products')
       .where('preOrderDeadline', sign, today)
       .where('exposeToB2b', '==', '노출')
       .onSnapshot((snapshot) =>
@@ -70,6 +63,7 @@ export function toSalePriceToLocaleCurrency(
   exchangeRate: any,
   category: string
 ) {
+  console.log('price', price, 'user', user, 'exchangeRate', exchangeRate, 'category', category);
   if (exchangeRate[user.currency] === 1) {
     return (
       (price - price * user.dcRates[category] - user.dcAmount[`${category}A`]) /

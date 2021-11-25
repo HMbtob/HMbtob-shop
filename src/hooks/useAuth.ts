@@ -34,7 +34,6 @@ export function useAuth() {
       await setExchangeRate(rates.data());
     };
     getAuth();
-    console.log(exchangeRate);
     setLoading(false);
     return;
   }, []);
@@ -56,10 +55,10 @@ export function useAuth() {
     }
   }, []);
 
-  const logOut = useCallback(() => {
-    signOut(auth);
-    navigate('/');
-    return null;
+  const logOut = useCallback(async () => {
+    await signOut(auth);
+    await navigate('/');
+    return;
   }, []);
   return {
     authState: {

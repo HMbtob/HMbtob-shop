@@ -18,7 +18,7 @@ export function PreOrderRow({ product }: any) {
       className="grid  grid-cols-20 place-items-center text-center 
   text-xs border-b p-1 border-l border-r bg-white relative">
       <img
-        className="h-10 w-10 bg-contain bg-center bg-no-repeat rounded-sm"
+        className="col-span-2 h-12 w-12 bg-contain bg-center bg-no-repeat rounded-sm"
         src={product.data.thumbNail}
         alt="thumbNail"
       />{' '}
@@ -26,7 +26,7 @@ export function PreOrderRow({ product }: any) {
         <div className="h-full items-center flex">{product.data.barcode}</div>
         <div className="h-full items-center flex">{product.data.sku}</div>
       </div>
-      <div className="col-span-7 z-10">{product.data.title}</div>
+      <div className="col-span-6 z-10">{product.data.title}</div>
       <div className="col-span-2 z-10">{toDate(product.data.relDate.seconds)}</div>
       <div className="col-span-2 z-10">
         <div>{toDate(product.data.preOrderDeadline.seconds)}</div>
