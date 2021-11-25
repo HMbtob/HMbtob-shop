@@ -6,10 +6,12 @@ import {
   toLocalCurrency,
   toSalePriceToLocaleCurrency
 } from '../../../utils/orderUtils';
+import { AddCart } from '../../addCart';
 
 export function PreOrderRow({ product }: any) {
   const authContext = useContext(AuthContext);
   const user: any = authContext?.authState.authUser;
+  const exchangeRate: any = authContext?.authState.exchangeRate;
   const { day, hour } = preOrderLimitTime(product.data.preOrderDeadline.seconds);
 
   return (
@@ -50,6 +52,9 @@ export function PreOrderRow({ product }: any) {
           )}{' '}
           {user?.currency}
         </div>
+      </div>
+      <div className="col-span-2">
+        <AddCart product={product} user={user} exchangeRate={exchangeRate} />
       </div>
     </div>
   );

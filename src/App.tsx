@@ -15,7 +15,16 @@ function App() {
         <>
           <Header setQuery={setQuery} />
           <Routes>
-            <Route path="/" caseSensitive={false} element={<B2bStore />} />
+            <Route
+              path="/"
+              caseSensitive={false}
+              element={
+                <B2bStore
+                  user={authContext?.authState.authUser}
+                  exchangeRate={authContext?.authState.exchangeRate}
+                />
+              }
+            />
           </Routes>
         </>
       ) : (
