@@ -7,8 +7,7 @@ export function Search({ setQuery }: setQueryProps) {
   const { register, handleSubmit } = useForm();
 
   const onSubmit = useCallback(async (data) => {
-    console.log(data);
-    return setQuery('');
+    return;
   }, []);
 
   return (
