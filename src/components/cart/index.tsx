@@ -12,8 +12,9 @@ export function Cart({ user, exchangeRate }: any) {
   const [carts, setCarts] = useState<Array<object>>([]);
 
   useEffect(() => {
+    console.log(user.email);
     cartFetch(setCarts, user.email);
-  }, []);
+  }, [user.email]);
   return (
     <div
       className="m-auto h-auto lg:h-full w-full lg:w-11/12 mt-12 flex flex-col 

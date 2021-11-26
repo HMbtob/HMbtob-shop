@@ -25,9 +25,11 @@ export function productsFetch(setter: any, sign: WhereFilterOp, category?: strin
 
 // Fetching Notice
 export function noticeFetch(setter: any) {
-  db.collection('notice').onSnapshot((snapshot) =>
-    setter(snapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() })))
-  );
+  db.collection('notice')
+    .orderBy('createdAt')
+    .onSnapshot((snapshot) =>
+      setter(snapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() })))
+    );
 }
 
 // Fetching Cart

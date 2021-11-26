@@ -9,7 +9,7 @@ export default function CommonHeader() {
       <div className="col-span-7">TITLE</div>
       <div className="col-span-3">RELEASE</div>
       <div className="col-span-3">PRICE</div>
-      <div className="col-span-2">EA</div>
+      <div className="col-span-2"></div>
     </div>
   );
 }
