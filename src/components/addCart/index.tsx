@@ -21,7 +21,7 @@ export function AddCart({ product, user, exchangeRate }: any) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full">
-      <div className="flex flex-row">
+      <div className="flex flex-row justify-center items-center">
         <input
           {...register('qty', {
             required: { value: true, message: 'Required.' },
@@ -30,9 +30,11 @@ export function AddCart({ product, user, exchangeRate }: any) {
             valueAsNumber: true
           })}
           type="number"
-          className="border outline-none w-full"
+          className="border outline-none w-2/3 h-full text-base text-center p-1"
         />
-        <ShoppingCartIcon type="submit" className="h-5" />
+        <button type="submit" onSubmit={handleSubmit(onSubmit)}>
+          <ShoppingCartIcon className="h-5 text-gray-600" />
+        </button>
       </div>
       <ErrorMessage
         errors={errors}

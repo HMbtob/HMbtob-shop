@@ -1,8 +1,8 @@
-export function PreOrderHeader() {
+export function SearchedHeader() {
   return (
     <div
       className="grid grid-cols-20 text-center bg-gray-800 p-1
-    text-gray-200 text-sm font-bold items-center">
+text-gray-200 text-sm font-bold items-center">
       <div className="col-span-2">COVER</div>
       <div className="col-span-4">BARCODE/SKU</div>
       <div className="col-span-6">TITLE</div>

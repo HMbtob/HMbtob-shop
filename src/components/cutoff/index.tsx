@@ -1,4 +1,4 @@
-export function CommonCutOff({ setItemsPerPage }: any) {
+export function CutOff({ setItemsPerPage }: any) {
   return (
     <div className="w-full flex justify-end text-sm items-center">
       Per Page

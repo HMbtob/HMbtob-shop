@@ -1,16 +1,7 @@
-import { setQueryProps } from '../../models/search';
 import { SearchIcon } from '@heroicons/react/solid';
 import { RefreshIcon } from '@heroicons/react/solid';
-import { useCallback } from 'react';
-import { useForm } from 'react-hook-form';
-export function Search({ setQuery }: setQueryProps) {
-  const { register, handleSubmit } = useForm();
 
-  const onSubmit = useCallback(async (data) => {
-    setQuery(data.search);
-    return;
-  }, []);
-
+export function Search({ setQuery, register, handleSubmit, reset, onSubmit }: any) {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -26,13 +17,13 @@ export function Search({ setQuery }: setQueryProps) {
         placeholder="search"
       />{' '}
       <div className="flex flex-row justify-evenly w-1/4">
-        <SearchIcon
-          className="cursor-pointer text-gray-500 h-6"
-          type="submit"
-          // onClick={searchedProducts}
-        />
+        <button type="submit" onSubmit={handleSubmit(onSubmit)}>
+          <SearchIcon className="cursor-pointer text-gray-500 h-6" />
+        </button>
         <RefreshIcon
-          // onClick={handleClear}
+          onClick={() => {
+            setQuery(''), reset();
+          }}
           className="cursor-pointer text-gray-500 h-6"
         />
       </div>
