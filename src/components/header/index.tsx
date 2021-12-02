@@ -40,6 +40,13 @@ export function Header({ setQuery }: setQueryProps) {
       <div className="pr-5 flex flex-row">
         <div
           onClick={() => {
+            navigate('/myorder');
+          }}
+          className="text-sm font-mono font-bold text-center text-gray-200 bg-blue-900 cursor-pointer">
+          MyOrder
+        </div>
+        <div
+          onClick={() => {
             authContext?.authHandler.logOut();
           }}
           className="text-sm font-mono font-bold text-center text-gray-200 bg-blue-900 cursor-pointer">

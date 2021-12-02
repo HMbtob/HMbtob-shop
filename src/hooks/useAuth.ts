@@ -56,9 +56,8 @@ export function useAuth() {
   }, []);
 
   const logOut = useCallback(async () => {
-    await signOut(auth);
+    signOut(auth);
     await navigate('/');
-    return;
   }, []);
   return {
     authState: {

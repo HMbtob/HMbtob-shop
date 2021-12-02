@@ -1,4 +1,4 @@
-export default function CartHeader() {
+export function CartHeader() {
   return (
     <div
       className="grid grid-cols-7 place-items-center text-center 

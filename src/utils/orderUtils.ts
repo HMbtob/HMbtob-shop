@@ -44,8 +44,9 @@ export function cartFetch(setter: any, email: string) {
 }
 
 // Set Cart
-export function cartSet(user: any, product: any, qty: number, exchangeRate: any) {
-  db.collection('accounts')
+export async function cartSet(user: any, product: any, qty: number, exchangeRate: any) {
+  await db
+    .collection('accounts')
     .doc(user.email)
     .collection('cart')
     .doc()

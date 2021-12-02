@@ -10,7 +10,7 @@ export async function countriesFetch(setCountries: any): Promise<void> {
     .collection('shippingFee')
     .doc('dhl')
     .onSnapshot(async (snapshot) => {
-      const coun = await snapshot.data();
+      const coun = snapshot.data();
       const { z }: any = coun;
       setCountries(
         [].concat(
@@ -44,10 +44,72 @@ export async function signInWithEmail(email: string, password: string, data: any
     await createUserWithEmailAndPassword(auth, email, password);
     delete data.email;
     delete data.password;
-    await setInterval(
-      async () => await db.collection('accounts').doc(email).update({ survay: data }),
-      5000
-    );
+    setTimeout(async () => {
+      await db.collection('accounts').doc(email).update({ survay: data });
+      await db.collection('accounts').doc(email).collection('addresses').doc('defaultAddress').set({
+        name: 'Default Address',
+        paymentMethod: '',
+        shippingType: '',
+        recipient: '',
+        recipientPhoneNumber: '',
+        recipientEmail: '',
+        street: '',
+        city: '',
+        states: '',
+        country: '',
+        zipcode: ''
+      });
+      await db.collection('accounts').doc(email).collection('addresses').doc('#1').set({
+        name: '# 1',
+        paymentMethod: '',
+        shippingType: '',
+        recipient: '',
+        recipientPhoneNumber: '',
+        recipientEmail: '',
+        street: '',
+        city: '',
+        states: '',
+        country: '',
+        zipcode: ''
+      });
+      await db.collection('accounts').doc(email).collection('addresses').doc('#2').set({
+        name: '# 2',
+        paymentMethod: '',
+        shippingType: '',
+        recipient: '',
+        recipientPhoneNumber: '',
+        recipientEmail: '',
+        street: '',
+        city: '',
+        states: '',
+        country: '',
+        zipcode: ''
+      });
+      await db.collection('accounts').doc(email).collection('addresses').doc('#3').set({
+        name: '# 3',
+        paymentMethod: '',
+        shippingType: '',
+        recipient: '',
+        recipientPhoneNumber: '',
+        recipientEmail: '',
+        street: '',
+        city: '',
+        states: '',
+        country: '',
+        zipcode: ''
+      });
+      await db.collection('accounts').doc(email).collection('addresses').doc('shipToKorea').set({
+        name: 'Ship To Korea',
+        paymentMethod: '',
+        shippingType: '',
+        recipient: '',
+        recipientPhoneNumber: '',
+        recipientEmail: '',
+        address: '',
+        detailAddress: '',
+        zipcode: ''
+      });
+    }, 5000);
   } catch (e) {
     console.log(e);
   }

@@ -10,6 +10,6 @@ export interface AuthContextType {
   };
   authHandler: {
     logIn: (form: LogInForm) => Promise<string | null | undefined | object>;
-    logOut: () => Promise<null | void>;
+    logOut: () => Promise<void>;
   };
 }
