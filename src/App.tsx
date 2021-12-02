@@ -29,7 +29,12 @@ function App() {
             <Route
               path="/myorder"
               caseSensitive={false}
-              element={<MyOrder user={authContext?.authState.authUser} />}
+              element={
+                <MyOrder
+                  user={authContext?.authState.authUser}
+                  exchangeRate={authContext?.authState.exchangeRate}
+                />
+              }
             />
           </Routes>
         </>
