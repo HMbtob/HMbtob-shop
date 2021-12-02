@@ -16,7 +16,7 @@ export function PreOrder() {
     return setPreOrderProducts([]);
   }, []);
   return (
-    <div className="flex flex-col w-11/12 h-1/4 mb-5">
+    <div className="flex flex-col w-11/12 h-xlg mb-5">
       <div className="text-center text-sm font-bold text-gray-800">PRE ORDER</div>
       <PreOrderHeader />
       {/* scrollbar-hide */}

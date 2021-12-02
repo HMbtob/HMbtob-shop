@@ -1,5 +1,4 @@
 import { ShoppingCartIcon } from '@heroicons/react/outline';
-import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import { cartSet } from '../../utils/orderUtils';
@@ -8,16 +7,15 @@ export function AddCart({ product, user, exchangeRate }: any) {
   const {
     register,
     handleSubmit,
-    reset,
+    setValue,
     formState: { errors }
   } = useForm();
 
-  const onSubmit = useCallback(async (data) => {
+  const onSubmit = async (data: any) => {
     //   재고 확인 후 업데이트 함수 실행
     cartSet(user, product, data.qty, exchangeRate);
-    reset();
-    return;
-  }, []);
+    setValue('qty', null);
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full">

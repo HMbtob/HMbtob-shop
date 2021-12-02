@@ -3,8 +3,10 @@ import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import { SignUpForm } from '../../models/signUp';
 import { countriesFetch, signInWithEmail } from '../../utils/signUpUtils';
+import { useNavigate } from 'react-router';
 
 export function SignUp() {
+  const navigate = useNavigate();
   const [countries, setCountries] = useState<Array<string>>([]);
   const {
     register,
@@ -14,7 +16,8 @@ export function SignUp() {
 
   const onSubmit = useCallback(async (data: SignUpForm) => {
     const { email, password } = data;
-    signInWithEmail(email, password, data);
+    await signInWithEmail(email, password, data);
+    navigate('/');
   }, []);
   useEffect(() => {
     countriesFetch(setCountries);

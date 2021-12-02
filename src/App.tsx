@@ -5,6 +5,7 @@ import { SignUp } from './components/signup';
 import { Header } from './components/header';
 import { useState } from 'react';
 import { B2bStore } from './components/b2bstore';
+import { MyOrder } from './components/myorder';
 function App() {
   const authContext = useAuth();
   const [query, setQuery] = useState<string>('');
@@ -24,6 +25,11 @@ function App() {
                   query={query}
                 />
               }
+            />
+            <Route
+              path="/myorder"
+              caseSensitive={false}
+              element={<MyOrder user={authContext?.authState.authUser} />}
             />
           </Routes>
         </>
