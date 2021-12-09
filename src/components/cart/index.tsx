@@ -49,15 +49,21 @@ absolute lg:static bg-white lg:bg-transparent">
           </React.Suspense>
         ))}
       </div>
-      <div className="flex flex-col justify-center items-center bg-blue-200">
-        <div className="flex flex-row">
-          <select onChange={(e) => setType(e.target.value)}>
-            {shippingAddresses.map((li: any) => (
-              <option key={li.data.name} value={li.data.name}>
-                {li.data.name}
-              </option>
-            ))}
-          </select>
+      <div className="flex flex-col justify-center items-center">
+        <div className="flex flex-row items-center my-1 w-full">
+          <div className="w-1/3 text-right">{'Address Name : '}</div>
+          <div className="w-2/3">
+            <select
+              value={type}
+              onChange={(e) => setType(e.target.value)}
+              className="py-1 px-1 border rounded-sm w-4/5 outline-none">
+              {shippingAddresses.map((li: any) => (
+                <option key={li.data.name} value={li.data.name}>
+                  {li.data.name}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
         <div className="w-full">
           {add && type !== 'Ship To Korea' ? (

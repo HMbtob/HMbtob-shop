@@ -29,42 +29,53 @@ export function CartDefaultAddress({ user, add, exchangeRate }: any) {
   const [carts, setCarts] = useState<Array<object>>([]);
 
   const onSubmit = async (data: any) => {
-    const today = new Date();
-    const addName = add.data.name;
-    // 주소록 저장
-    await db.collection('accounts').doc(user.email).collection('addresses').doc(add.id).update({
-      paymentMethod: data.paymentMethod,
-      shippingType: data.shippingType,
-      recipient: data.recipient,
-      recipientPhoneNumber: data.recipientPhoneNumber,
-      recipientEmail: data.recipientEmail,
-      street: data.street,
-      city: data.city,
-      states: data.states,
-      country: data.country,
-      zipcode: data.zipcode
-    });
-    // 카트 -> 주문으로
-    await carts
-      .reduce((a: any, c: any) => {
-        c.data.addName = addName;
-        c.data.createdAt = today;
-        c.data.userId = user.email;
-        c.data.userUid = user.uid;
-        c.data.currency = user.currency;
-        c.data.exchangeRate = exchangeRate;
-        a.push(c);
-        return a;
-      }, [])
-      .map(
+    if (carts.length < 1) {
+      return alert('Cart is empty');
+    }
+    if (confirm('Gonna order?')) {
+      const today = new Date();
+      const addName = add.data.name;
+      // 주소록 저장
+      await db.collection('accounts').doc(user.email).collection('addresses').doc(add.id).update({
+        paymentMethod: data.paymentMethod,
+        shippingType: data.shippingType,
+        recipient: data.recipient,
+        recipientPhoneNumber: data.recipientPhoneNumber,
+        recipientEmail: data.recipientEmail,
+        street: data.street,
+        city: data.city,
+        states: data.states,
+        country: data.country,
+        zipcode: data.zipcode
+      });
+      // 카트 -> 주문으로
+      await carts
+        .reduce((a: any, c: any) => {
+          c.data.addName = addName;
+          c.data.createdAt = today;
+          c.data.userId = user.email;
+          c.data.userUid = user.uid;
+          c.data.currency = user.currency;
+          c.data.exchangeRate = exchangeRate;
+          c.data.paymentMethod = data.paymentMethod;
+          c.data.shippingType = data.shippingType;
+          c.data.country = data.country;
+          a.push(c);
+          return a;
+        }, [])
+        .map(
+          async (cart: any) =>
+            await db.collection('accounts').doc(user.email).collection('order').doc().set(cart.data)
+        );
+      // 카트삭제
+      await carts.map(
         async (cart: any) =>
-          await db.collection('accounts').doc(user.email).collection('order').doc().set(cart.data)
+          await db.collection('accounts').doc(user.email).collection('cart').doc(cart.id).delete()
       );
-    // 카트삭제
-    await carts.map(
-      async (cart: any) =>
-        await db.collection('accounts').doc(user.email).collection('cart').doc(cart.id).delete()
-    );
+      alert('Order completed');
+    } else {
+      return;
+    }
   };
 
   useEffect(() => {
@@ -89,7 +100,9 @@ export function CartDefaultAddress({ user, add, exchangeRate }: any) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <button type="submit" className=" bg-blue-900 rounded-sm text-gray-100 py-1 px-4 font-bold">
+      <button
+        type="submit"
+        className=" bg-blue-900 rounded-sm text-gray-100 py-2 px-6 font-bold my-3">
         ORDER
       </button>
       {/* Payment Method */}

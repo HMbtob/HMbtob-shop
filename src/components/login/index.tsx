@@ -4,7 +4,7 @@ import { ErrorMessage } from '@hookform/error-message';
 import { LogInForm } from '../../models/login';
 import { AuthContext } from '../../hooks/useAuth';
 import { useNavigate } from 'react-router';
-import { forgotPassword } from '../../utils/signUpUtils';
+import { forgotPassword, signInWithGoogle } from '../../utils/signUpUtils';
 
 export function Login() {
   const authContext = useContext(AuthContext);
@@ -83,6 +83,13 @@ export function Login() {
             {' Sign Up with e-mail !'}
           </button>
         </div>
+        <button
+          className="mt-5 bg-gray-800 text-lg text-gray-50 px-2 lg:px-8 p-2 rounded
+          w-11/12 lg:w-80"
+          type="button"
+          onClick={() => signInWithGoogle()}>
+          Sign in with Google
+        </button>
       </div>
     </form>
   );

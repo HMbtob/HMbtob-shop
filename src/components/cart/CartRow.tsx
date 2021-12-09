@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import { MinusCircleIcon } from '@heroicons/react/outline';
-import { cartDelete, cartUpdate, toSalePriceToLocaleCurrency } from '../../utils/orderUtils';
+import { cartDelete, cartUpdate } from '../../utils/orderUtils';
 export function CartRow({ cart, exchangeRate, user }: any) {
   const {
     register,
@@ -20,16 +20,18 @@ export function CartRow({ cart, exchangeRate, user }: any) {
       className="grid grid-cols-7 place-items-center text-center text-xs py-1 border-b border-l border-r bg-gray-100">
       <div className="col-span-3">{cart.data.title}</div>
       <div className="col-span-2">
-        <div className=" bg-red-100 flex flex-row items-center justify-center">
+        <div className="w-full flex flex-row items-center justify-center">
           <input
             {...register('qty', {
               required: { value: true, message: 'Required.' },
               maxLength: { value: 5, message: 'Too long.' },
               minLength: { value: 1, message: 'Too short.' },
+              min: { value: 1, message: 'Too small Qty' },
+              max: { value: 5000, message: 'Too much Qty' },
               valueAsNumber: true
             })}
             type="number"
-            className=" w-1/3 h-7 border text-center outline-none"
+            className="w-2/3 h-7 border text-center outline-none"
           />
           <MinusCircleIcon className="h-5 cursor-pointer" onClick={() => cartDelete(user, cart)} />
         </div>
@@ -41,12 +43,8 @@ export function CartRow({ cart, exchangeRate, user }: any) {
           )}
         />
       </div>
-      <div className="col-span-1">
-        {toSalePriceToLocaleCurrency(cart.data.price, user, exchangeRate, cart.data.category)}
-      </div>
-      <div className="col-span-1">
-        {toSalePriceToLocaleCurrency(cart.data.totalPrice, user, exchangeRate, cart.data.category)}
-      </div>
+      <div className="col-span-1">{cart.data.price}</div>
+      <div className="col-span-1">{cart.data.totalPrice}</div>
     </form>
   );
 }
