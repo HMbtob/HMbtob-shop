@@ -6,6 +6,7 @@ import { Header } from './components/header';
 import { useState } from 'react';
 import { B2bStore } from './components/b2bstore';
 import { MyOrder } from './components/myorder';
+import { MyShipping } from './components/myshipping';
 function App() {
   const authContext = useAuth();
   const [query, setQuery] = useState<string>('');
@@ -31,6 +32,16 @@ function App() {
               caseSensitive={false}
               element={
                 <MyOrder
+                  user={authContext?.authState.authUser}
+                  exchangeRate={authContext?.authState.exchangeRate}
+                />
+              }
+            />
+            <Route
+              path="/myshipping"
+              caseSensitive={false}
+              element={
+                <MyShipping
                   user={authContext?.authState.authUser}
                   exchangeRate={authContext?.authState.exchangeRate}
                 />

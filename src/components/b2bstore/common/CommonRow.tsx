@@ -12,9 +12,9 @@ export function CommonRow({ product }: any) {
     <div
       id={product.id}
       className="grid  grid-cols-20 place-items-center text-center 
-            text-xs border-b p-1 border-l border-r bg-white relative">
+            text-sm border-b p-1 border-l border-r bg-white relative">
       <img
-        className="col-span-2 h-10 w-10 bg-contain bg-center bg-no-repeat rounded-sm"
+        className="col-span-2 h-14 w-14 bg-contain bg-center bg-no-repeat rounded-sm"
         src={product.data.thumbNail}
         alt="thumbNail"
       />{' '}
@@ -33,7 +33,7 @@ export function CommonRow({ product }: any) {
           )}{' '}
           {user?.currency}
         </div>
-        <div>
+        <div className="font-semibold">
           {toSalePriceToLocaleCurrency(
             product.data.price,
             authContext?.authState.authUser,

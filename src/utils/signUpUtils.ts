@@ -1,18 +1,22 @@
-import { db } from '../firebase';
-import { sendPasswordResetEmail, getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { db, provider } from '../firebase';
+import {
+  sendPasswordResetEmail,
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithRedirect
+} from 'firebase/auth';
 import { firebaseApp } from '../firebase';
 
 const auth = getAuth(firebaseApp);
 
 // DHL 나라 목록 가져오기
 export async function countriesFetch(setCountries: any): Promise<void> {
-  await db
-    .collection('shippingFee')
+  db.collection('shippingFee')
     .doc('dhl')
     .onSnapshot(async (snapshot) => {
       const coun = snapshot.data();
       const { z }: any = coun;
-      setCountries(
+      await setCountries(
         [].concat(
           ...z
             ?.map((zo: any) => Object.values(zo).map((co: any) => co.country))
@@ -113,4 +117,8 @@ export async function signInWithEmail(email: string, password: string, data: any
   } catch (e) {
     console.log(e);
   }
+}
+
+export async function signInWithGoogle() {
+  await signInWithRedirect(auth, provider).catch((e) => alert(e.message));
 }

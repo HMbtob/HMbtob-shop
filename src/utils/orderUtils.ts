@@ -43,6 +43,24 @@ export function cartFetch(setter: any, email: string) {
     );
 }
 
+export function toSelePrice(product: any, user: any, exchangeRate: any): any {
+  if (exchangeRate[user.currency] === 1) {
+    return Number(
+      (product.data.price -
+        product.data.price * user.dcRates[product.data.category] -
+        user.dcAmount[`${product.data.category}A`]) /
+        exchangeRate[user.currency]
+    );
+  } else {
+    return Number(
+      (product.data.price -
+        (product.data.price * user.dcRates[product.data.category] -
+          user.dcAmount[`${product.data.category}A`])) /
+        exchangeRate[user.currency]
+    ).toFixed(2);
+  }
+}
+
 // Set Cart
 export async function cartSet(user: any, product: any, qty: number, exchangeRate: any) {
   await db
@@ -61,14 +79,14 @@ export async function cartSet(user: any, product: any, qty: number, exchangeRate
       exchangeRate: exchangeRate,
       nickName: user.nickName,
       preOrderDeadline: product.data.preOrderDeadline,
-      price: product.data.price,
+      price: toSelePrice(product, user, exchangeRate),
       productId: product.id,
       quan: qty,
       relDate: product.data.relDate,
       shipped: false,
       sku: product.data.sku,
       title: product.data.title,
-      totalPrice: product.data.price * qty,
+      totalPrice: toSelePrice(product, user, exchangeRate) * qty,
       totalWeight: product.data.weight * qty,
       weight: product.data.weight
     });
@@ -77,11 +95,31 @@ export async function cartSet(user: any, product: any, qty: number, exchangeRate
 // Delete Cart
 export function cartDelete(user: any, cart: any) {
   db.collection('accounts').doc(user.email).collection('cart').doc(cart.id).delete();
+  alert('Deleted');
 }
 
 // Update Cart
 export function cartUpdate(user: any, cart: any, qty: any) {
-  db.collection('accounts').doc(user.email).collection('cart').doc(cart.id).update({ quan: qty });
+  db.collection('accounts')
+    .doc(user.email)
+    .collection('cart')
+    .doc(cart.id)
+    .update({ quan: qty, totalPrice: cart.data.price * qty, totalWeight: cart.data.weight * qty });
+  alert('Updated');
+}
+// Update Order
+export function orderUpdate(user: any, order: any, qty: any, memo: string) {
+  db.collection('accounts')
+    .doc(user.email)
+    .collection('order')
+    .doc(order.id)
+    .update({
+      quan: qty,
+      totalPrice: order.data.price * qty,
+      totalWeight: order.data.weight * qty,
+      memo: memo
+    });
+  alert('Updated');
 }
 
 // Categories for common product
@@ -108,12 +146,21 @@ export function toDate(timeSec: number) {
   return new Date(timeSec * 1000).toISOString().substring(0, 10);
 }
 
-// To locale currency
+// To locale currency(with cal)
 export function toLocalCurrency(price: number, user: any, exchangeRate: any) {
   if (exchangeRate[user.currency] === 1) {
     return (price / exchangeRate[user.currency])?.toLocaleString('ko-KR');
   } else {
     return (price / exchangeRate[user.currency])?.toFixed(2)?.toLocaleString();
+  }
+}
+
+// To locale currency(without cal)
+export function toLocalCurrencyWithoutCal(price: number, user: any, exchangeRate: any) {
+  if (exchangeRate[user.currency] === 1) {
+    return Number(price)?.toLocaleString('ko-KR');
+  } else {
+    return Number(price)?.toFixed(2)?.toLocaleString();
   }
 }
 
@@ -136,5 +183,13 @@ export function toSalePriceToLocaleCurrency(
     )
       .toFixed(2)
       .toLocaleString();
+  }
+}
+
+export function deleteOrder(order: any, user: any) {
+  if (confirm('really?')) {
+    db.collection('accounts').doc(user.email).collection('order').doc(order.id).delete();
+  } else {
+    return;
   }
 }

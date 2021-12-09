@@ -23,7 +23,7 @@ export function Common() {
   }, [category]);
 
   return (
-    <div className="flex flex-col h-xxlg w-11/12 mb-20">
+    <div className="flex flex-col h-xxlg w-11/12 mb-20 mt-10">
       <div className="text-center text-sm font-bold text-gray-800">PRODUCTS</div>
       {/* 컷오프 */}
       <CutOff setItemsPerPage={setItemsPerPage} />

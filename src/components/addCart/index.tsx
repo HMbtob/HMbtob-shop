@@ -25,6 +25,8 @@ export function AddCart({ product, user, exchangeRate }: any) {
             required: { value: true, message: 'Required.' },
             maxLength: { value: 5, message: 'Too long.' },
             minLength: { value: 1, message: 'Too short.' },
+            min: { value: 1, message: 'Too small Qty' },
+            max: { value: 5000, message: 'Too much Qty' },
             valueAsNumber: true
           })}
           type="number"
