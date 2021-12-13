@@ -10,9 +10,11 @@ import { MyShipping } from './components/myshipping';
 function App() {
   const authContext = useAuth();
   const [query, setQuery] = useState<string>('');
+
   return (
     <AuthContext.Provider value={authContext}>
-      {authContext?.authState.authUser ? (
+      {authContext?.authState?.authUser?.type === 'customer' ||
+      authContext?.authState?.authUser?.type === 'admin' ? (
         <>
           <Header setQuery={setQuery} />
           <Routes>

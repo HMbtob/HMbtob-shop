@@ -3,6 +3,7 @@ import { countriesFetch } from '../../utils/signUpUtils';
 import { ErrorMessage } from '@hookform/error-message';
 import { useForm } from 'react-hook-form';
 import { db } from '../../firebase';
+import firebase from 'firebase/compat';
 
 export function CartDefaultAddress({ user, add, exchangeRate }: any) {
   const [countries, setCountries] = useState<Array<string>>([]);
@@ -72,6 +73,25 @@ export function CartDefaultAddress({ user, add, exchangeRate }: any) {
         async (cart: any) =>
           await db.collection('accounts').doc(user.email).collection('cart').doc(cart.id).delete()
       );
+      // 재고 적용
+      carts.map(async (cart: any) => {
+        const products = await db.collection('products').doc(cart.data.productId).get();
+        const product: any = products.data();
+        await db
+          .collection('products')
+          .doc(cart.data.productId)
+          .update({
+            stock: product.stock - cart.data.quan,
+            totalSold: product.totalSold + cart.data.quan,
+            totalStock: product.totalStock - cart.data.quan,
+            stockHistory: firebase.firestore.FieldValue.arrayUnion({
+              type: 'sell on B2B',
+              writer: user.nickName || user.email,
+              amount: cart.data.quan,
+              date: new Date()
+            })
+          });
+      });
       alert('Order completed');
     } else {
       return;

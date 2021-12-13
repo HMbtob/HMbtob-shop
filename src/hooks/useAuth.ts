@@ -15,7 +15,7 @@ export const AuthContext = React.createContext<AuthContextType | null>(null);
 
 export function useAuth() {
   const [isLoading, setLoading] = useState<boolean>(false);
-  const [authUser, setAuthUser] = useState<object | null | undefined>(null);
+  const [authUser, setAuthUser] = useState<any>(null);
   const [exchangeRate, setExchangeRate] = useState<object | undefined>({});
   const auth = getAuth(firebaseApp);
   const navigate = useNavigate();
