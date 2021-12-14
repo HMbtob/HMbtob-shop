@@ -15,7 +15,7 @@ export function PreOrderRow({ product }: any) {
   const exchangeRate: any = authContext?.authState.exchangeRate;
   const { day, hour } = preOrderLimitTime(product.data.preOrderDeadline.seconds);
   const { dayGap } = newOne(product.data.createdAt.seconds);
-
+  console.log(dayGap);
   return (
     <div
       id={product.id}

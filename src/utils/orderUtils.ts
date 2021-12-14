@@ -85,7 +85,7 @@ export async function cartSet(user: any, product: any, qty: number, exchangeRate
       relDate: product.data.relDate,
       shipped: false,
       sku: product.data.sku,
-      title: product.data.title,
+      title: product.data.title.trim(),
       totalPrice: toSelePrice(product, user, exchangeRate) * qty,
       totalWeight: product.data.weight * qty,
       weight: product.data.weight
