@@ -8,6 +8,7 @@ import {
 } from '../../utils/orderUtils';
 import { TrashIcon, PhotographIcon } from '@heroicons/react/outline';
 import { LinkIcon } from '@heroicons/react/outline';
+import { CheckCircleIcon } from '@heroicons/react/outline';
 export function MyOrderRow({ order, user, exchangeRate }: any) {
   const {
     register,
@@ -33,6 +34,10 @@ export function MyOrderRow({ order, user, exchangeRate }: any) {
       <div className="col-span-3">{order.data.barcode}</div>
       <div className="col-span-3">{order.data.sku}</div>
       <div className="col-span-7 text-left flex flex-row items-center">
+        <CheckCircleIcon
+          className="h-5 mx-1"
+          style={{ color: `${order.data.confirmed ? 'green' : 'red'}` }}
+        />
         {order.data.title}
         {order?.data?.url ? <LinkIcon className="h-5 ml-2" /> : null}
         {order?.data?.thumbNailurl ? <PhotographIcon className="h-5 ml-2" /> : null}
@@ -55,6 +60,7 @@ export function MyOrderRow({ order, user, exchangeRate }: any) {
             max: { value: 5000, message: 'Too much Qty' },
             valueAsNumber: true
           })}
+          disabled={order.data.confirmed}
           type="number"
           className=" w-1/2 h-7 border text-center outline-none"
         />

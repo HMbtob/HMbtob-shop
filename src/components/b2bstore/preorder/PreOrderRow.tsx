@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { AuthContext } from '../../../hooks/useAuth';
 import {
+  newOne,
   preOrderLimitTime,
   toDate,
   toLocalCurrency,
@@ -13,6 +14,7 @@ export function PreOrderRow({ product }: any) {
   const user: any = authContext?.authState.authUser;
   const exchangeRate: any = authContext?.authState.exchangeRate;
   const { day, hour } = preOrderLimitTime(product.data.preOrderDeadline.seconds);
+  const { dayGap } = newOne(product.data.createdAt.seconds);
 
   return (
     <div
@@ -28,7 +30,10 @@ export function PreOrderRow({ product }: any) {
         <div className="h-full items-center flex">{product.data.barcode}</div>
         <div className="h-full items-center flex">{product.data.sku}</div>
       </div>
-      <div className="col-span-6 z-10">{product.data.title}</div>
+      <div className="col-span-6 flex flex-row items-center w-full">
+        {dayGap < 6 && <div className="text-xs text-red-600 font-bold mr-2">NEW</div>}
+        {product.data.title}
+      </div>
       <div className="col-span-2 z-10">{toDate(product.data.relDate.seconds)}</div>
       <div className="col-span-2 z-10">
         <div>{toDate(product.data.preOrderDeadline.seconds)}</div>

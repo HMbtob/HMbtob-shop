@@ -140,6 +140,12 @@ export function preOrderLimitTime(deadLineSec: number) {
   const hour = Math.ceil((gap % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
   return { day, hour };
 }
+export function newOne(createdSec: number) {
+  const today = new Date().getTime();
+  const gap = today - new Date(createdSec * 1000).getTime();
+  const dayGap = Math.ceil(gap / (1000 * 60 * 60 * 24));
+  return { dayGap };
+}
 
 // ToLocalString date
 export function toDate(timeSec: number) {

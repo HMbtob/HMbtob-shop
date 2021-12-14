@@ -22,7 +22,7 @@ export function CommonRow({ product }: any) {
         <div className="h-full items-center flex">{product.data.barcode}</div>
         <div className="h-full items-center flex">{product.data.sku}</div>
       </div>
-      <div className="col-span-7 z-10">{product.data.title}</div>
+      <div className="col-span-7 text-left w-full">{product.data.title}</div>
       <div className="col-span-3 z-10">{toDate(product.data.relDate.seconds)}</div>
       <div className="col-span-3 z-10 ">
         <div className="line-through">
