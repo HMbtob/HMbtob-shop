@@ -4,14 +4,15 @@ export function MyOrderHeader({ handleSort }: any) {
   return (
     <div
       className="grid grid-cols-28 grid-flow-col text-center 
-     bg-gray-800 text-gray-100 py-1 rounded-none text-sm font-semibold">
+     bg-gray-800 text-gray-100 py-1 rounded-none text-2xs font-semibold">
       <div
-        className="col-span-2 flex flex-row items-center justify-center cursor-pointer"
+        className="flex flex-row col-span-2  items-center justify-center cursor-pointer"
         id="addName"
         onClick={(e) => handleSort(e)}>
         ADDRESS
         <SwitchVerticalIcon id="addName" className="h-4 ml-1" />
       </div>
+
       <div
         className="col-span-2 flex flex-row items-center justify-center cursor-pointer"
         id="createdAt"

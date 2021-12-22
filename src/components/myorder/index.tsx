@@ -37,7 +37,7 @@ export function MyOrder({ user, exchangeRate }: any) {
   }, [forSort]);
   return (
     <div className="w-full h-full flex justify-center">
-      <div className="w-11/12 flex-col mt-20">
+      <div className="w-full lg:w-11/12 flex-col mt-20">
         <div
           className="w-full text-center my-4 text-gray-800 
        font-semibold text-lg">

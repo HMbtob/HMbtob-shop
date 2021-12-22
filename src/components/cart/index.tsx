@@ -36,13 +36,12 @@ export function Cart({ user, exchangeRate }: any) {
   }, [shippingAddresses, type]);
   return (
     <div
-      className="m-auto h-auto lg:h-full w-full lg:w-11/12 mt-12 flex flex-col 
-text-center text-sm font-bold text-gray-800 
-absolute lg:static bg-white lg:bg-transparent">
+      className="lg:m-auto h-full w-full lg:w-11/12 lg:mt-12 flex flex-col 
+text-center text-sm font-bold text-gray-800 static bg-white mb-10">
       {' '}
       CART LIST
       <CartHeader />
-      <div className="h-auto lg:mb-10 overflow-y-auto">
+      <div className="mb-5 overflow-y-auto">
         {carts.map((cart: any, i: number) => (
           <React.Suspense key={i} fallback={<div>Loading...</div>}>
             <CartRow cart={cart} exchangeRate={exchangeRate} user={user} />

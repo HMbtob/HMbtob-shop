@@ -19,13 +19,18 @@ export function AddCart({ product, user, exchangeRate }: any) {
       : setSoldOut(true);
   };
   const onSubmit = async (data: any) => {
-    //   재고 확인 후 업데이트 함수 실행
-    if (Number(product.data.stock) > data.qty || product.data.limitedStock === false) {
-      cartSet(user, product, data.qty, exchangeRate);
-      setValue('qty', null);
-    } else if (Number(product.data.stock) <= data.qty && product.data.limitedStock === true) {
-      alert(`Please order ${Number(product.data.stock) - 1} or less`);
+    try {
+      //   재고 확인 후 업데이트 함수 실행
+      if (Number(product.data.stock) > data.qty || product.data.limitedStock === false) {
+        cartSet(user, product, data.qty, exchangeRate);
+        setValue('qty', null);
+      } else if (Number(product.data.stock) <= data.qty && product.data.limitedStock === true) {
+        alert(`Please order ${Number(product.data.stock) - 1} or less`);
+      }
+    } catch (e) {
+      console.log(e);
     }
+    alert('Item added');
   };
 
   useEffect(() => {
@@ -49,10 +54,10 @@ export function AddCart({ product, user, exchangeRate }: any) {
                 valueAsNumber: true
               })}
               type="number"
-              className="border outline-none w-2/3 h-full text-base text-center p-1"
+              className="border outline-none w-2/3 h-full text-base text-center p-1 py-2"
             />
             <button type="submit" onSubmit={handleSubmit(onSubmit)}>
-              <ShoppingCartIcon className="h-5 text-gray-600" />
+              <ShoppingCartIcon className="h-6 text-gray-600" />
             </button>
           </>
         )}

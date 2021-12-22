@@ -1,12 +1,10 @@
-import React from 'react';
-
 export function HiddenRowRow({ li }: any) {
   return (
-    <div className="grid grid-cols-20 text-gray-800 items-center py-1">
-      <div className="col-span-9"></div>
+    <div className="grid grid-cols-4 text-gray-800 items-center py-1">
+      <div className="col-span-1"></div>
 
       <div
-        className="col-span-10 text-left cursor-pointer"
+        className="col-span-1 text-left cursor-pointer"
         onClick={() =>
           window.open(
             `https://www.dhl.com/global-en/home/tracking/tracking-express.html?submit=1&tracking-id=${li}`,
@@ -34,10 +32,9 @@ export default function HiddenRow({ orderListInShippings, shipping }: any) {
       )}
       {orderListInShippings &&
         orderListInShippings?.map((li: any, i: any) => (
-          <div key={i} className="grid grid-cols-20 text-gray-800 items-center pt-1">
+          <div key={i} className="grid grid-cols-12 text-gray-800 items-center pt-1">
             {/* <div className="col-span-2"></div> */}
-            <div className="col-span-3">{li.data.childOrderNumber}</div>
-            <div className="col-span-9 text-left">{li.data.title}</div>
+            <div className="col-span-6 text-left">{li.data.title}</div>
             <div className="col-span-2">
               {li.data.price} {li.data.currency}
             </div>

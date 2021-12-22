@@ -28,7 +28,7 @@ export function Common() {
       {/* 컷오프 */}
       <CutOff setItemsPerPage={setItemsPerPage} />
       {/* 카테고리 */}
-      <CommonCategory category={category} setCategory={setCategory} />
+      <CommonCategory category={category} setCategory={setCategory} from="pc" />
       <CommonHeader />
       {/* scrollbar-hide */}
       <div className="overflow-y-auto">

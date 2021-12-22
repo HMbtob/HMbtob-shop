@@ -13,7 +13,7 @@ export function PreOrder() {
 
   useEffect(() => {
     productsFetch(setPreOrderProducts, '>');
-    return setPreOrderProducts([]);
+    // return setPreOrderProducts([]);
   }, []);
   return (
     <div className="flex flex-col w-11/12 h-xlg mb-5">

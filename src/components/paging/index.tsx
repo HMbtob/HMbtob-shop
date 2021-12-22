@@ -21,11 +21,11 @@ export function Paging({ itemsPerPage, items, setCurrentItems }: any): any {
     <div className="w-full flex items-center">
       <ReactPaginate
         breakLabel="..."
-        nextLabel="next >"
+        nextLabel=">"
         onPageChange={handlePageClick}
         pageRangeDisplayed={4}
         pageCount={pageCount}
-        previousLabel="< previous"
+        previousLabel="<"
         marginPagesDisplayed={1}
         // css
         breakClassName={'break-me'}

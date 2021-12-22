@@ -24,7 +24,9 @@ export function MyOrderRow({ order, user, exchangeRate }: any) {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="grid grid-cols-28 text-sm text-center items-center border py-1">
+      className={`grid grid-cols-28 text-sm text-center items-center border py-1 ${
+        order.data.canceled ? 'line-through' : ''
+      }`}>
       <div className="col-span-2">{order.data.addName}</div>
       <div className="col-span-2 flex flex-row justify-center">
         <TrashIcon className="h-5 pr-3 cursor-pointer" onClick={() => deleteOrder(order, user)} />
@@ -60,7 +62,7 @@ export function MyOrderRow({ order, user, exchangeRate }: any) {
             max: { value: 5000, message: 'Too much Qty' },
             valueAsNumber: true
           })}
-          disabled={order.data.confirmed}
+          disabled={true}
           type="number"
           className=" w-1/2 h-7 border text-center outline-none"
         />
