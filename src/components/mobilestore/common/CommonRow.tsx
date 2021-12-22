@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { AuthContext } from '../../../hooks/useAuth';
 import { toDate, toSalePriceToLocaleCurrency } from '../../../utils/orderUtils';
 import { AddCart } from '../../addCart';

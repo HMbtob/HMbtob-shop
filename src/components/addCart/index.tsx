@@ -24,13 +24,13 @@ export function AddCart({ product, user, exchangeRate }: any) {
       if (Number(product.data.stock) > data.qty || product.data.limitedStock === false) {
         cartSet(user, product, data.qty, exchangeRate);
         setValue('qty', null);
+        alert('Item added');
       } else if (Number(product.data.stock) <= data.qty && product.data.limitedStock === true) {
         alert(`Please order ${Number(product.data.stock) - 1} or less`);
       }
     } catch (e) {
       console.log(e);
     }
-    alert('Item added');
   };
 
   useEffect(() => {
