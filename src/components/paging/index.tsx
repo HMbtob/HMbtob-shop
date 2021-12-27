@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
-import { sortByCreatedAt } from '../../utils/searchUtils';
+// import { sortByCreatedAt } from '../../utils/searchUtils';
 import './paging.css';
 export function Paging({ itemsPerPage, items, setCurrentItems }: any): any {
   const [pageCount, setPageCount] = useState(0);
@@ -13,7 +13,7 @@ export function Paging({ itemsPerPage, items, setCurrentItems }: any): any {
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
-    setCurrentItems(sortByCreatedAt(items).slice(itemOffset, endOffset));
+    setCurrentItems(items.slice(itemOffset, endOffset));
     setPageCount(Math.ceil(items.length / itemsPerPage));
   }, [items, itemOffset, itemsPerPage]);
 

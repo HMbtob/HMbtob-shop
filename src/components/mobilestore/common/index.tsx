@@ -4,6 +4,7 @@ import CommonCategory from '../../b2bstore/common/CommonCategory';
 import { productsFetch } from '../../../utils/orderUtils';
 import { CutOff } from '../../cutoff';
 import { Paging } from '../../paging';
+import { sortByRelDate } from '../../../utils/searchUtils';
 export function Common({ handleToggleCommon, toggleCommon, user }: any) {
   const CommonRow = React.lazy(() =>
     import('./CommonRow').then((module) => ({
@@ -52,7 +53,7 @@ export function Common({ handleToggleCommon, toggleCommon, user }: any) {
           <div className="flex flex-row w-full items-center justfy-center">
             <Paging
               itemsPerPage={itemsPerPage}
-              items={commonProducts}
+              items={sortByRelDate(commonProducts)}
               setCurrentItems={setCurrentItems}
             />
           </div>

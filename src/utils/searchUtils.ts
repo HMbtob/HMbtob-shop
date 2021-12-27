@@ -82,3 +82,10 @@ export function sortByCreatedAt(products: any) {
     return dateA < dateB ? 1 : -1;
   });
 }
+export function sortByRelDate(products: any) {
+  return products.sort((a: any, b: any): any => {
+    let dateA = a.data.relDate;
+    let dateB = b.data.relDate;
+    return dateA < dateB ? 1 : -1;
+  });
+}

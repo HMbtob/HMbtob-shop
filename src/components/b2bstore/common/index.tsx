@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { productsFetch } from '../../../utils/orderUtils';
+import { sortByRelDate } from '../../../utils/searchUtils';
 import { CutOff } from '../../cutoff';
 import { Paging } from '../../paging';
 import CommonCategory from './CommonCategory';
@@ -42,7 +43,7 @@ export function Common() {
       <div className="flex flex-row w-full items-center justfy-center">
         <Paging
           itemsPerPage={itemsPerPage}
-          items={commonProducts}
+          items={sortByRelDate(commonProducts)}
           setCurrentItems={setCurrentItems}
         />
       </div>
