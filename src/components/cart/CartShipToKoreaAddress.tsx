@@ -26,6 +26,9 @@ export function CartShipToKoreaAddress({ user, add, exchangeRate }: any) {
   const [carts, setCarts] = useState<Array<object>>([]);
 
   const onSubmit = async (data: any) => {
+    if (carts.length < 1) {
+      return alert('Cart is empty');
+    }
     if (confirm('Gonna order?')) {
       const today = new Date();
       const addName = add.data.name;
@@ -47,16 +50,28 @@ export function CartShipToKoreaAddress({ user, add, exchangeRate }: any) {
           c.data.createdAt = today;
           c.data.userId = user.email;
           c.data.userUid = user.uid;
+          c.data.paymentMethod = data.paymentMethod;
+          c.data.shippingType = data.shippingType;
           c.data.currency = user.currency;
           c.data.exchangeRate = exchangeRate;
           c.data.country = 'Korea,  D.P.R Of (KP)';
           a.push(c);
           return a;
         }, [])
-        .map(
-          async (cart: any) =>
-            await db.collection('accounts').doc(user.email).collection('order').doc().set(cart.data)
-        );
+        .map(async (cart: any) => {
+          await db
+            .collection('accounts')
+            .doc(user.email)
+            .collection('order')
+            .doc(cart.id)
+            .set(cart.data),
+            await db
+              .collection('products')
+              .doc(cart.data.productId)
+              .collection('newStockHistory')
+              .doc(cart.id)
+              .set(cart.data);
+        });
       // 카트삭제
       carts.map(
         async (cart: any) =>

@@ -20,7 +20,6 @@ export function Common() {
 
   useEffect(() => {
     productsFetch(setCommonProducts, '<=', category);
-    return setCommonProducts([]);
   }, [category]);
 
   return (

@@ -1,32 +1,15 @@
-import { useEffect, useState } from 'react';
-import { db } from '../../firebase';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { toDate, toLocalCurrency } from '../../utils/orderUtils';
-import { ChevronDownIcon } from '@heroicons/react/outline';
+import { ChevronDownIcon, ClipboardListIcon } from '@heroicons/react/outline';
 import HiddenRow from './HiddenRow';
 
 export function MyShippingRow({ user, shipping, hiddenAll, exchangeRate }: any) {
-  const [orderListInShippings, setOrderListInShippings] = useState<Array<object>>([]);
-
-  const sort = orderListInShippings?.length;
-  const totalQty = orderListInShippings?.reduce((a: any, c: any) => {
-    return a + c.data.quan;
-  }, 0);
-
+  const navigate = useNavigate();
   const [forHidden, setForHidden] = useState<Boolean>(true);
   const handleHidden = () => {
     setForHidden(!forHidden);
   };
-
-  useEffect(() => {
-    db.collection('accounts')
-      .doc(user.email)
-      .collection('shippingsInAccount')
-      .doc(shipping.id)
-      .collection('orderListInShippings')
-      .onSnapshot((snapshot) =>
-        setOrderListInShippings(snapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() })))
-      );
-  }, []);
   return (
     <div className="border-b border-r border-l w-full border-gray-500">
       <div
@@ -52,18 +35,16 @@ export function MyShippingRow({ user, shipping, hiddenAll, exchangeRate }: any) 
             </div>
           )}
           <ChevronDownIcon onClick={() => handleHidden()} className="h-5 cursor-pointer" />
+          <ClipboardListIcon
+            onClick={() => navigate(`/myshipping/${shipping.data.userId}/${shipping.id}`)}
+            className="h-5 cursor-pointer"
+          />
         </div>
         <div>{shipping.data.nickName}</div>
         <div>{shipping.data.shippingType}</div>
         <div>{shipping.data.country} </div>
-        <div>
-          {sort && sort}
-          {' type'}
-        </div>
-        <div>
-          {totalQty && totalQty}
-          {' ea'}
-        </div>
+        <div></div>
+        <div></div>
         <div>
           {toLocalCurrency(shipping.data.itemsPrice, user, exchangeRate)} {user.currency}
         </div>
@@ -74,11 +55,7 @@ export function MyShippingRow({ user, shipping, hiddenAll, exchangeRate }: any) 
           {toLocalCurrency(shipping.data.totalAmount, user, exchangeRate)} {user.currency}
         </div>
       </div>
-      {forHidden && hiddenAll ? (
-        ''
-      ) : (
-        <HiddenRow shipping={shipping} orderListInShippings={orderListInShippings} />
-      )}
+      {forHidden && hiddenAll ? '' : <HiddenRow shipping={shipping} />}
     </div>
   );
 }

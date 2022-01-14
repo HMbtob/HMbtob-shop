@@ -47,6 +47,13 @@ export function Header({ setQuery }: setQueryProps) {
         </div>
         <div
           onClick={() => {
+            navigate('/mycredit');
+          }}
+          className="text-sm font-mono font-bold text-center text-gray-200 bg-blue-900 cursor-pointer mr-5">
+          MyCredit
+        </div>
+        <div
+          onClick={() => {
             navigate('/myshipping');
           }}
           className="text-sm font-mono font-bold text-center text-gray-200 bg-blue-900 cursor-pointer mr-5">

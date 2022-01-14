@@ -64,10 +64,20 @@ export function CartDefaultAddress({ user, add, exchangeRate }: any) {
           a.push(c);
           return a;
         }, [])
-        .map(
-          async (cart: any) =>
-            await db.collection('accounts').doc(user.email).collection('order').doc().set(cart.data)
-        );
+        .map(async (cart: any) => {
+          await db
+            .collection('accounts')
+            .doc(user.email)
+            .collection('order')
+            .doc(cart.id)
+            .set(cart.data),
+            await db
+              .collection('products')
+              .doc(cart.data.productId)
+              .collection('newStockHistory')
+              .doc(cart.id)
+              .set(cart.data);
+        });
       // 카트삭제
       await carts.map(
         async (cart: any) =>

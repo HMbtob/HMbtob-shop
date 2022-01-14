@@ -1,3 +1,6 @@
+import { useEffect, useState } from 'react';
+import { db } from '../../firebase';
+
 export function HiddenRowRow({ li }: any) {
   return (
     <div className="grid grid-cols-4 text-gray-800 items-center py-1">
@@ -17,7 +20,19 @@ export function HiddenRowRow({ li }: any) {
   );
 }
 
-export default function HiddenRow({ orderListInShippings, shipping }: any) {
+export default function HiddenRow({ shipping }: any) {
+  const [orderListInShippings, setOrderListInShippings] = useState<Array<object>>([]);
+
+  useEffect(() => {
+    db.collection('accounts')
+      .doc(shipping.data.userId)
+      .collection('shippingsInAccount')
+      .doc(shipping.id)
+      .collection('orderListInShippings')
+      .onSnapshot((snapshot) =>
+        setOrderListInShippings(snapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() })))
+      );
+  }, []);
   return (
     <div
       className="grid-flow-col text-center
@@ -33,7 +48,6 @@ export default function HiddenRow({ orderListInShippings, shipping }: any) {
       {orderListInShippings &&
         orderListInShippings?.map((li: any, i: any) => (
           <div key={i} className="grid grid-cols-12 text-gray-800 items-center pt-1">
-            {/* <div className="col-span-2"></div> */}
             <div className="col-span-6 text-left">{li.data.title}</div>
             <div className="col-span-2">
               {li.data.price} {li.data.currency}

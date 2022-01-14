@@ -46,18 +46,22 @@ export function cartFetch(setter: any, email: string) {
 export function toSelePrice(product: any, user: any, exchangeRate: any): any {
   if (exchangeRate[user.currency] === 1) {
     return Number(
-      (product.data.price -
-        product.data.price * user.dcRates[product.data.category] -
-        user.dcAmount[`${product.data.category}A`]) /
+      (
+        (product.data.price -
+          product.data.price * user.dcRates[product.data.category] -
+          user.dcAmount[`${product.data.category}A`]) /
         exchangeRate[user.currency]
+      ).toFixed(0)
     );
   } else {
     return Number(
-      (product.data.price -
-        (product.data.price * user.dcRates[product.data.category] -
-          user.dcAmount[`${product.data.category}A`])) /
+      (
+        (product.data.price -
+          (product.data.price * user.dcRates[product.data.category] -
+            user.dcAmount[`${product.data.category}A`])) /
         exchangeRate[user.currency]
-    ).toFixed(2);
+      ).toFixed(2)
+    );
   }
 }
 

@@ -12,6 +12,8 @@ import { MobileStore } from './components/mobilestore';
 import { MobileHeader } from './components/mobilestore/mobileheader';
 import { MyOrders } from './components/mobilestore/myorders/index';
 import { MyShippings } from './components/mobilestore/myshippings/index';
+import { Invoice } from './components/invoice';
+import { MyCredit } from './components/mycredit';
 function App() {
   const authContext = useAuth();
   const [query, setQuery] = useState<string>('');
@@ -58,10 +60,25 @@ function App() {
                   }
                 />
                 <Route
+                  path="/mycredit"
+                  caseSensitive={false}
+                  element={<MyCredit authContext={authContext} />}
+                />
+                <Route
                   path="/myshipping"
                   caseSensitive={false}
                   element={
                     <MyShipping
+                      user={authContext?.authState.authUser}
+                      exchangeRate={authContext?.authState.exchangeRate}
+                    />
+                  }
+                />
+                <Route
+                  path="/myshipping/:userId/:shippingId"
+                  caseSensitive={false}
+                  element={
+                    <Invoice
                       user={authContext?.authState.authUser}
                       exchangeRate={authContext?.authState.exchangeRate}
                     />

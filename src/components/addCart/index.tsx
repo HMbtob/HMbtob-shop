@@ -21,7 +21,7 @@ export function AddCart({ product, user, exchangeRate }: any) {
   const onSubmit = async (data: any) => {
     try {
       //   재고 확인 후 업데이트 함수 실행
-      if (Number(product.data.stock) > data.qty || product.data.limitedStock === false) {
+      if (Number(product.data.stock) >= data.qty || product.data.limitedStock === false) {
         cartSet(user, product, data.qty, exchangeRate);
         setValue('qty', null);
         alert('Item added');

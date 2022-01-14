@@ -42,10 +42,13 @@ export function useAuth() {
     const { email, password } = form;
     try {
       setPersistence(auth, browserLocalPersistence).then(async () => {
-        const user = await signInWithEmailAndPassword(auth, email, password);
-        setAuthUser(user);
+        signInWithEmailAndPassword(auth, email, password)
+          .then((user) => setAuthUser(user))
+          .catch((e) => {
+            const errorMessage = e.message;
+            alert(errorMessage);
+          });
       });
-      return;
     } catch (e) {
       console.log(e);
       setAuthUser(null);
@@ -56,8 +59,8 @@ export function useAuth() {
   }, []);
 
   const logOut = useCallback(async () => {
-    signOut(auth);
-    await navigate('/');
+    await signOut(auth);
+    navigate('/');
   }, []);
   return {
     authState: {
