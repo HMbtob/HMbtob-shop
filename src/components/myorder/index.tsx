@@ -45,18 +45,35 @@ export function MyOrder({ user, exchangeRate }: any) {
         </div>
         <MyOrderHeader handleSort={handleSort} />
         <div>
-          {myOrders.map((order: any, i: number) => (
-            <React.Suspense key={i} fallback={<div>Loading...</div>}>
-              <MyOrderRow order={order} user={user} exchangeRate={exchangeRate} />
-            </React.Suspense>
-          ))}
+          {myOrders
+            .filter((order: any) => order.data.pickingUp !== true)
+            .map((order: any, i: number) => (
+              <React.Suspense key={i} fallback={<div>Loading...</div>}>
+                <MyOrderRow order={order} user={user} exchangeRate={exchangeRate} />
+              </React.Suspense>
+            ))}
         </div>
         <div
           className="w-full text-center my-4 text-gray-800 
-       font-semibold text-lg mt-20">
+       font-semibold text-lg mt-5">
           Special Order
         </div>
         <SpecialOrder user={user} exchangeRate={exchangeRate} />
+        <div
+          className="w-full text-center mt-20 text-gray-800 
+       font-semibold text-lg">
+          Picking List
+        </div>
+        <MyOrderHeader handleSort={handleSort} />
+        <div>
+          {myOrders
+            .filter((order: any) => order.data.pickingUp === true)
+            .map((order: any, i: number) => (
+              <React.Suspense key={i} fallback={<div>Loading...</div>}>
+                <MyOrderRow order={order} user={user} exchangeRate={exchangeRate} />
+              </React.Suspense>
+            ))}
+        </div>
       </div>
     </div>
   );

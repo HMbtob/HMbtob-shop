@@ -13,7 +13,7 @@ export function Common() {
     }))
   );
 
-  const [category, setCategory] = useState<string>('cd');
+  const [category, setCategory] = useState<any>('cd');
   const [commonProducts, setCommonProducts] = useState<Array<object>>([]);
   const [currentItems, setCurrentItems] = useState<Array<object>>([]);
   const [itemsPerPage, setItemsPerPage] = useState<Number>(20);

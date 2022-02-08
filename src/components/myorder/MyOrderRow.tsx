@@ -35,14 +35,17 @@ export function MyOrderRow({ order, user, exchangeRate }: any) {
       <div className="col-span-2">{toDate(order.data.relDate.seconds)}</div>
       <div className="col-span-3">{order.data.barcode}</div>
       <div className="col-span-3">{order.data.sku}</div>
-      <div className="col-span-7 text-left flex flex-row items-center">
-        <CheckCircleIcon
-          className="h-5 mx-1"
-          style={{ color: `${order.data.confirmed ? 'green' : 'red'}` }}
-        />
-        {order.data.title}
-        {order?.data?.url ? <LinkIcon className="h-5 ml-2" /> : null}
-        {order?.data?.thumbNailurl ? <PhotographIcon className="h-5 ml-2" /> : null}
+      <div className="col-span-7 text-left flex flex-col">
+        <div className="flex flex-row items-center">
+          <CheckCircleIcon
+            className="h-5 mx-1"
+            style={{ color: `${order.data.confirmed ? 'green' : 'red'}` }}
+          />
+          {order.data.title}
+          {order?.data?.url ? <LinkIcon className="h-5 ml-2" /> : null}
+          {order?.data?.thumbNailurl ? <PhotographIcon className="h-5 ml-2" /> : null}
+        </div>
+        <div className="pl-5 text-2xs">{order?.data?.optionName}</div>
       </div>
       <div className="col-span-2 flex flex-col">
         <div>

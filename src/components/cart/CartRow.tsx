@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import { MinusCircleIcon } from '@heroicons/react/outline';
 import { cartDelete, cartUpdate } from '../../utils/orderUtils';
-export function CartRow({ cart, exchangeRate, user }: any) {
+export function CartRow({ cart, user }: any) {
   const {
     register,
     handleSubmit,
@@ -18,7 +18,10 @@ export function CartRow({ cart, exchangeRate, user }: any) {
     <form
       onSubmit={handleSubmit(onSubmit)}
       className="grid grid-cols-7 place-items-center text-center text-xs py-1 border-b border-l border-r bg-gray-100">
-      <div className="col-span-3">{cart.data.title}</div>
+      <div className="col-span-3">
+        <div>{cart.data.title}</div>
+        <div className=" text-2xs font-normal">{cart?.data?.optionName}</div>
+      </div>
       <div className="col-span-2">
         <div className="w-full flex flex-row items-center justify-center">
           <input

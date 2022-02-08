@@ -35,7 +35,8 @@ export function UpdateProduct({ product, user, exchangeRate }: any) {
       .get(
         `https://us-central1-interasiastock.cloudfunctions.net/app/big/getproductinfo/${product.data.bigC.id}`
       )
-      .then((bigProduct) => setValue('bigQty', bigProduct.data.data.inventory_level));
+      .then((bigProduct) => setValue('bigQty', bigProduct.data.data.inventory_level))
+      .catch((e) => console.log(e));
   }, [product]);
 
   return (

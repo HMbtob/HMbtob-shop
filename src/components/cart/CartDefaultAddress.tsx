@@ -79,7 +79,7 @@ export function CartDefaultAddress({ user, add, exchangeRate }: any) {
               .set(cart.data);
         });
       // 카트삭제
-      await carts.map(
+      carts.map(
         async (cart: any) =>
           await db.collection('accounts').doc(user.email).collection('cart').doc(cart.id).delete()
       );

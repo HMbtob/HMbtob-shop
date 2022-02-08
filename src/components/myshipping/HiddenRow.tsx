@@ -45,10 +45,16 @@ export default function HiddenRow({ shipping }: any) {
           ))}
         </div>
       )}
+      {console.log(orderListInShippings)}
       {orderListInShippings &&
         orderListInShippings?.map((li: any, i: any) => (
           <div key={i} className="grid grid-cols-12 text-gray-800 items-center pt-1">
-            <div className="col-span-6 text-left">{li.data.title}</div>
+            <div className="col-span-6 text-left pl-12">
+              <div>
+                {' '}
+                {li.data.title} {li?.data?.optionName}
+              </div>
+            </div>
             <div className="col-span-2">
               {li.data.price} {li.data.currency}
             </div>

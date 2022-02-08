@@ -43,12 +43,12 @@ export function cartFetch(setter: any, email: string) {
     );
 }
 
-export function toSelePrice(product: any, user: any, exchangeRate: any): any {
+export function toSelePrice(product: any, optionPrice: any, user: any, exchangeRate: any): any {
   if (exchangeRate[user.currency] === 1) {
     return Number(
       (
-        (product.data.price -
-          product.data.price * user.dcRates[product.data.category] -
+        (optionPrice -
+          optionPrice * user.dcRates[product.data.category] -
           user.dcAmount[`${product.data.category}A`]) /
         exchangeRate[user.currency]
       ).toFixed(0)
@@ -56,8 +56,8 @@ export function toSelePrice(product: any, user: any, exchangeRate: any): any {
   } else {
     return Number(
       (
-        (product.data.price -
-          (product.data.price * user.dcRates[product.data.category] -
+        (optionPrice -
+          (optionPrice * user.dcRates[product.data.category] -
             user.dcAmount[`${product.data.category}A`])) /
         exchangeRate[user.currency]
       ).toFixed(2)
@@ -66,7 +66,14 @@ export function toSelePrice(product: any, user: any, exchangeRate: any): any {
 }
 
 // Set Cart
-export async function cartSet(user: any, product: any, qty: number, exchangeRate: any) {
+export async function cartSet(
+  user: any,
+  product: any,
+  optionPrice: any,
+  optionName: any,
+  qty: number,
+  exchangeRate: any
+) {
   await db
     .collection('accounts')
     .doc(user.email)
@@ -83,16 +90,17 @@ export async function cartSet(user: any, product: any, qty: number, exchangeRate
       exchangeRate: exchangeRate,
       nickName: user.nickName,
       preOrderDeadline: product.data.preOrderDeadline,
-      price: toSelePrice(product, user, exchangeRate),
+      price: toSelePrice(product, optionPrice, user, exchangeRate),
       productId: product.id,
       quan: qty,
       relDate: product.data.relDate,
       shipped: false,
       sku: product.data.sku,
       title: product.data.title.trim(),
-      totalPrice: toSelePrice(product, user, exchangeRate) * qty,
+      totalPrice: toSelePrice(product, optionPrice, user, exchangeRate) * qty,
       totalWeight: product.data.weight * qty,
-      weight: product.data.weight
+      weight: product.data.weight,
+      optionName
     });
 }
 
@@ -198,6 +206,11 @@ export function toSalePriceToLocaleCurrency(
 
 export function deleteOrder(order: any, user: any) {
   if (confirm('really?')) {
+    db.collection('products')
+      .doc(order.data.productId)
+      .collection('newStockHistory')
+      .doc(order.id)
+      .update({ canceled: true });
     db.collection('accounts').doc(user.email).collection('order').doc(order.id).delete();
   } else {
     return;
