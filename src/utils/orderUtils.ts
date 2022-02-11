@@ -1,5 +1,6 @@
 import { db } from '../firebase';
 import { WhereFilterOp } from '@firebase/firestore-types';
+import { increment } from 'firebase/firestore';
 
 // Fetching product by date
 export function productsFetch(setter: any, sign: WhereFilterOp, category?: string): void {
@@ -206,6 +207,9 @@ export function toSalePriceToLocaleCurrency(
 
 export function deleteOrder(order: any, user: any) {
   if (confirm('really?')) {
+    db.collection('products')
+      .doc(order.data.productId)
+      .update({ stock: increment(order.data.quan) });
     db.collection('products')
       .doc(order.data.productId)
       .collection('newStockHistory')

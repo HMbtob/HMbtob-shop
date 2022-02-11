@@ -4,15 +4,7 @@ import { ErrorMessage } from '@hookform/error-message';
 import { cartSet } from '../../utils/orderUtils';
 import { useEffect, useState } from 'react';
 
-export function AddCart({
-  product,
-  optioned,
-  optionPrice,
-  optionName,
-  optionStock,
-  user,
-  exchangeRate
-}: any) {
+export function AddCart({ product, option, user, exchangeRate }: any) {
   const {
     register,
     handleSubmit,
@@ -22,8 +14,8 @@ export function AddCart({
 
   const [soldOut, setSoldOut] = useState<any>(false);
   const forSoldOut = (product: any): void => {
-    if (optioned) {
-      Number(optionStock) > 0 || product.data.limitedStock === false
+    if (product.data.optioned) {
+      Number(option?.data?.optionStock) > 0 || product.data.limitedStock === false
         ? setSoldOut(false)
         : setSoldOut(true);
       return;
@@ -33,25 +25,32 @@ export function AddCart({
       : setSoldOut(true);
   };
   const onSubmit = async (data: any) => {
-    if (optionName === undefined && optioned) {
-      return alert('Required option selection');
-    }
     try {
       // 옵션별 재고 확인 후 업데이트 함수 실행
-      if (optioned) {
-        if (Number(optionStock) >= data.qty || product.data.limitedStock === false) {
-          cartSet(user, product, optionPrice, optionName, data.qty, exchangeRate);
+      if (product.data.optioned) {
+        if (Number(option.data.optionStock) >= data.qty || product.data.limitedStock === false) {
+          cartSet(
+            user,
+            product,
+            option.data.optionPrice,
+            option.data.optionName,
+            data.qty,
+            exchangeRate
+          );
           setValue('qty', null);
           alert('Item added');
           return;
-        } else if (Number(optionStock) <= data.qty && product.data.limitedStock === true) {
-          alert(`Please order ${Number(optionStock) - 1} or less`);
+        } else if (
+          Number(option.data.optionStock) <= data.qty &&
+          product.data.limitedStock === true
+        ) {
+          alert(`Please order ${Number(option.data.optionStock) - 1} or less`);
           return;
         }
       }
       //   재고 확인 후 업데이트 함수 실행
       if (Number(product.data.stock) >= data.qty || product.data.limitedStock === false) {
-        cartSet(user, product, 0, '옵션없음', data.qty, exchangeRate);
+        cartSet(user, product, product.data.price, '옵션없음', data.qty, exchangeRate);
         setValue('qty', null);
         alert('Item added');
       } else if (Number(product.data.stock) <= data.qty && product.data.limitedStock === true) {
@@ -64,44 +63,12 @@ export function AddCart({
 
   useEffect(() => {
     forSoldOut(product);
-  }, [product, optionStock]);
+  }, [product, option]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full">
       <div className="flex flex-row justify-center items-center">
-        {optionName === undefined && optioned && (
-          <div className=" font-bold text-red-600 text-sm">Option Required</div>
-        )}
-
-        {optionName !== undefined && optioned && soldOut && (
-          <div className=" font-bold text-red-600 text-sm">SOLD OUT</div>
-        )}
-        {optionName === undefined && !optioned && soldOut && (
-          <div className=" font-bold text-red-600 text-sm">SOLD OUT</div>
-        )}
-
-        {!soldOut && (
-          <>
-            <input
-              {...register('qty', {
-                required: { value: true, message: 'Required.' },
-                maxLength: { value: 5, message: 'Too long.' },
-                minLength: { value: 1, message: 'Too short.' },
-                min: { value: 1, message: 'Too small Qty' },
-                max: { value: 5000, message: 'Too much Qty' },
-                valueAsNumber: true
-              })}
-              type="number"
-              className="border outline-none w-2/3 h-full text-base text-center p-1 py-2"
-            />
-            <button type="submit" onSubmit={handleSubmit(onSubmit)}>
-              <ShoppingCartIcon className="h-6 text-gray-600" />
-            </button>
-          </>
-        )}
-        {/* {optionName === undefined && optioned ? (
-          <div className=" font-bold text-red-600 text-sm">Option Required</div>
-        ) : optionName === !undefined && optioned && soldOut ? (
+        {soldOut ? (
           <div className=" font-bold text-red-600 text-sm">SOLD OUT</div>
         ) : (
           <>
@@ -121,7 +88,7 @@ export function AddCart({
               <ShoppingCartIcon className="h-6 text-gray-600" />
             </button>
           </>
-        )} */}
+        )}
       </div>
       <ErrorMessage
         errors={errors}
