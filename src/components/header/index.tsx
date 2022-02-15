@@ -38,6 +38,12 @@ export function Header({ setQuery }: setQueryProps) {
       </div>
       {/* 버튼들 */}
       <div className="pr-5 flex flex-row">
+        <div className="text-sm font-mono font-bold text-center text-gray-200 bg-blue-900 cursor-pointer mr-5">
+          Hi,
+          {authContext?.authState?.authUser?.nickName
+            ? authContext?.authState?.authUser?.nickName
+            : authContext?.authState?.authUser?.email}
+        </div>
         <div
           onClick={() => {
             navigate('/myorder');

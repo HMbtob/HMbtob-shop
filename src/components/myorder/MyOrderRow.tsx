@@ -45,7 +45,7 @@ export function MyOrderRow({ order, user, exchangeRate }: any) {
           {order?.data?.url ? <LinkIcon className="h-5 ml-2" /> : null}
           {order?.data?.thumbNailurl ? <PhotographIcon className="h-5 ml-2" /> : null}
         </div>
-        <div className="pl-5 text-2xs">{order?.data?.optionName}</div>
+        <div className="pl-5 text-2xs">{order.data.optioned ? order?.data?.optionName : ''}</div>
       </div>
       <div className="col-span-2 flex flex-col">
         <div>
