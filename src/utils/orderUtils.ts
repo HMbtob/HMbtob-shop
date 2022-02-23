@@ -44,23 +44,31 @@ export function cartFetch(setter: any, email: string) {
     );
 }
 
-export function toSelePrice(product: any, optionPrice: any, user: any, exchangeRate: any): any {
+export function toSelePrice(
+  product: any,
+  optionPrice: any,
+  user: any,
+  exchangeRate: any,
+  qty: any = 1
+): any {
   if (exchangeRate[user.currency] === 1) {
     return Number(
       (
-        (optionPrice -
+        ((optionPrice -
           optionPrice * user.dcRates[product.data.category] -
           user.dcAmount[`${product.data.category}A`]) /
-        exchangeRate[user.currency]
+          exchangeRate[user.currency]) *
+        qty
       ).toFixed(0)
     );
   } else {
     return Number(
       (
-        (optionPrice -
-          (optionPrice * user.dcRates[product.data.category] -
-            user.dcAmount[`${product.data.category}A`])) /
-        exchangeRate[user.currency]
+        ((optionPrice -
+          optionPrice * user.dcRates[product.data.category] -
+          user.dcAmount[`${product.data.category}A`]) /
+          exchangeRate[user.currency]) *
+        qty
       ).toFixed(2)
     );
   }
@@ -73,7 +81,8 @@ export async function cartSet(
   optionPrice: any,
   optionName: any,
   qty: number,
-  exchangeRate: any
+  exchangeRate: any,
+  optionId: any = 'none'
 ) {
   await db
     .collection('accounts')
@@ -92,13 +101,15 @@ export async function cartSet(
       nickName: user.nickName,
       preOrderDeadline: product.data.preOrderDeadline,
       price: toSelePrice(product, optionPrice, user, exchangeRate),
-      productId: product.id,
+      productId: product?.id ? product?.id : 'none',
+      optioned: product?.data?.optioned ? product?.data?.optioned : false,
+      optionId: optionId ? optionId : 'none',
       quan: qty,
       relDate: product.data.relDate,
       shipped: false,
       sku: product.data.sku,
       title: product.data.title.trim(),
-      totalPrice: toSelePrice(product, optionPrice, user, exchangeRate) * qty,
+      totalPrice: toSelePrice(product, optionPrice, user, exchangeRate, qty),
       totalWeight: product.data.weight * qty,
       weight: product.data.weight,
       optionName
@@ -197,7 +208,7 @@ export function toSalePriceToLocaleCurrency(
     ).toLocaleString('ko-KR');
   } else {
     return (
-      (price - (price * user.dcRates[category] - user.dcAmount[`${category}A`])) /
+      (price - price * user.dcRates[category] - user.dcAmount[`${category}A`]) /
       exchangeRate[user.currency]
     )
       .toFixed(2)

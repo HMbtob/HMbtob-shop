@@ -4,6 +4,7 @@ import { ErrorMessage } from '@hookform/error-message';
 import { useForm } from 'react-hook-form';
 import { db } from '../../firebase';
 import firebase from 'firebase/compat';
+import { increment } from 'firebase/firestore';
 
 export function CartDefaultAddress({ user, add, exchangeRate }: any) {
   const [countries, setCountries] = useState<Array<string>>([]);
@@ -87,6 +88,17 @@ export function CartDefaultAddress({ user, add, exchangeRate }: any) {
       carts.map(async (cart: any) => {
         const products = await db.collection('products').doc(cart.data.productId).get();
         const product: any = products.data();
+        if (product.optioned === true) {
+          await db
+            .collection('products')
+            .doc(cart.data.productId)
+            .collection('options')
+            .doc(cart.data.optionId)
+            .update({
+              optionStock: increment(cart.data.quan * -1)
+            });
+          return;
+        }
         await db
           .collection('products')
           .doc(cart.data.productId)

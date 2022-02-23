@@ -1,4 +1,5 @@
 import { db } from '../firebase';
+import { v4 as uuidv4 } from 'uuid';
 
 export async function specialOrderSubmit(
   user: any,
@@ -31,7 +32,7 @@ export async function specialOrderSubmit(
           Number(user.dcAmount['specialOrderA'].toFixed(0))
       ),
 
-      productId: 'specialOrder',
+      productId: uuidv4(),
       quan: data.qty,
       relDate: today,
       shipped: false,

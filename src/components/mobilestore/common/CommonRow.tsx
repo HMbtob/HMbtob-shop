@@ -46,51 +46,77 @@ export function CommonRow({ product }: any) {
 
           <div
             className="flex flex-row justify-evenly 
-        text-gray-800 font-semibold my-1 text-sm">
+           text-gray-800 font-semibold my-1 text-sm">
             {user?.type === 'customer' && <div>{toDate(product.data.relDate.seconds)}</div>}
-            {user?.type === 'admin' && product.data.limitedStock === false && (
-              <RefreshIcon
-                className="cursor-pointer h-5"
-                style={{ color: 'blue', opacity: '0.7', fontSize: '15' }}
-                onClick={async (e) => {
-                  e.preventDefault();
-                  await db.collection('products').doc(product.id).update({ limitedStock: true });
-                  return false;
-                }}
-              />
+            {user?.type === 'admin' && (
+              <div className="flex flex-col justify-center items-center">
+                <div>
+                  {user?.type === 'admin' && product.data.limitedStock === false && (
+                    <RefreshIcon
+                      className="cursor-pointer h-5"
+                      style={{ color: 'blue', opacity: '0.7', fontSize: '15' }}
+                      onClick={async (e) => {
+                        e.preventDefault();
+                        await db
+                          .collection('products')
+                          .doc(product.id)
+                          .update({ limitedStock: true });
+                        return false;
+                      }}
+                    />
+                  )}
+                  {user?.type === 'admin' && product.data.limitedStock === true && (
+                    <XCircleIcon
+                      className="cursor-pointer h-5"
+                      style={{ color: 'red', opacity: '0.7', fontSize: '15' }}
+                      onClick={async (e) => {
+                        e.preventDefault();
+                        await db
+                          .collection('products')
+                          .doc(product.id)
+                          .update({ limitedStock: false });
+                        return false;
+                      }}
+                    />
+                  )}
+                </div>
+                <div>{product?.data?.barcode}</div>
+              </div>
             )}
-            {user?.type === 'admin' && product.data.limitedStock === true && (
-              <XCircleIcon
-                className="cursor-pointer h-5"
-                style={{ color: 'red', opacity: '0.7', fontSize: '15' }}
-                onClick={async (e) => {
-                  e.preventDefault();
-                  await db.collection('products').doc(product.id).update({ limitedStock: false });
-                  return false;
-                }}
-              />
-            )}
-            {user?.type === 'admin' && product.data.reStockable === '불가능' && (
-              <LockClosedIcon
-                className="cursor-pointer h-5"
-                style={{ color: 'red', opacity: '0.7', fontSize: '15' }}
-                onClick={async (e) => {
-                  e.preventDefault();
-                  await db.collection('products').doc(product.id).update({ reStockable: '가능' });
-                  return false;
-                }}
-              />
-            )}
-            {user?.type === 'admin' && product.data.reStockable === '가능' && (
-              <LockOpenIcon
-                className="cursor-pointer h-5"
-                style={{ color: 'blue', opacity: '0.7', fontSize: '15' }}
-                onClick={async (e) => {
-                  e.preventDefault();
-                  await db.collection('products').doc(product.id).update({ reStockable: '불가능' });
-                  return false;
-                }}
-              />
+            {user?.type === 'admin' && (
+              <div className="flex flex-col justify-center items-center">
+                <div>
+                  {user?.type === 'admin' && product.data.reStockable === '불가능' && (
+                    <LockClosedIcon
+                      className="cursor-pointer h-5"
+                      style={{ color: 'red', opacity: '0.7', fontSize: '15' }}
+                      onClick={async (e) => {
+                        e.preventDefault();
+                        await db
+                          .collection('products')
+                          .doc(product.id)
+                          .update({ reStockable: '가능' });
+                        return false;
+                      }}
+                    />
+                  )}
+                  {user?.type === 'admin' && product.data.reStockable === '가능' && (
+                    <LockOpenIcon
+                      className="cursor-pointer h-5"
+                      style={{ color: 'blue', opacity: '0.7', fontSize: '15' }}
+                      onClick={async (e) => {
+                        e.preventDefault();
+                        await db
+                          .collection('products')
+                          .doc(product.id)
+                          .update({ reStockable: '불가능' });
+                        return false;
+                      }}
+                    />
+                  )}
+                </div>
+                <div>{product?.data?.sku}</div>
+              </div>
             )}
 
             {!options && (
@@ -116,6 +142,12 @@ export function CommonRow({ product }: any) {
                 <ChevronDoubleDownIcon className="h-5" />
               )}
             </div>
+          ) : user?.type === 'customer' && product.data.optioned === false ? (
+            <AddCart
+              product={product}
+              user={user}
+              exchangeRate={authContext?.authState.exchangeRate}
+            />
           ) : (
             <AddCart
               product={product}
@@ -132,6 +164,7 @@ export function CommonRow({ product }: any) {
           )}
         </div>
       </div>
+
       {hiddenOption &&
         options?.map((option: any) => (
           <OptionRow

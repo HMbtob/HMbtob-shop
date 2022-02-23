@@ -24,10 +24,11 @@ export function AddCart({ product, option, user, exchangeRate }: any) {
       ? setSoldOut(false)
       : setSoldOut(true);
   };
+
   const onSubmit = async (data: any) => {
     try {
       // 옵션별 재고 확인 후 업데이트 함수 실행
-      if (product.data.optioned) {
+      if (product?.data?.optioned) {
         if (Number(option.data.optionStock) >= data.qty || product.data.limitedStock === false) {
           cartSet(
             user,
@@ -35,7 +36,8 @@ export function AddCart({ product, option, user, exchangeRate }: any) {
             option.data.optionPrice,
             option.data.optionName,
             data.qty,
-            exchangeRate
+            exchangeRate,
+            option?.id
           );
           setValue('qty', null);
           alert('Item added');
@@ -50,7 +52,15 @@ export function AddCart({ product, option, user, exchangeRate }: any) {
       }
       //   재고 확인 후 업데이트 함수 실행
       if (Number(product.data.stock) >= data.qty || product.data.limitedStock === false) {
-        cartSet(user, product, product.data.price, '옵션없음', data.qty, exchangeRate);
+        cartSet(
+          user,
+          product,
+          product.data.price,
+          '옵션없음',
+          data.qty,
+          exchangeRate,
+          option?.id ? option?.id : 'none'
+        );
         setValue('qty', null);
         alert('Item added');
       } else if (Number(product.data.stock) <= data.qty && product.data.limitedStock === true) {
