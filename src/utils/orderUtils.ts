@@ -218,6 +218,22 @@ export function toSalePriceToLocaleCurrency(
 
 export function deleteOrder(order: any, user: any) {
   if (confirm('really?')) {
+    if (order.data.optioned) {
+      db.collection('products')
+        .doc(order.data.productId)
+        .collection('options')
+        .doc(order.data.optionId)
+        .update({ optionStock: increment(order.data.quan) });
+      db.collection('products')
+        .doc(order.data.productId)
+        .collection('options')
+        .doc(order.data.optionId)
+        .collection('newStockHistory')
+        .doc(order.id)
+        .update({ canceled: true });
+      db.collection('accounts').doc(user.email).collection('order').doc(order.id).delete();
+      return;
+    }
     db.collection('products')
       .doc(order.data.productId)
       .update({ stock: increment(order.data.quan) });

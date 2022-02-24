@@ -65,13 +65,24 @@ export function CartShipToKoreaAddress({ user, add, exchangeRate }: any) {
             .doc(user.email)
             .collection('order')
             .doc(cart.id)
-            .set(cart.data),
+            .set(cart.data);
+          if (cart.data.optioned) {
             await db
               .collection('products')
               .doc(cart.data.productId)
+              .collection('options')
+              .doc(cart.data.optionId)
               .collection('newStockHistory')
               .doc(cart.id)
               .set(cart.data);
+            return;
+          }
+          await db
+            .collection('products')
+            .doc(cart.data.productId)
+            .collection('newStockHistory')
+            .doc(cart.id)
+            .set(cart.data);
         });
       // 카트삭제
       carts.map(
