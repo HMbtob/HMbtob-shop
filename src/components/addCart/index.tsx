@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import { cartSet } from '../../utils/orderUtils';
 import { useEffect, useState } from 'react';
+import { db } from '../../firebase';
 
 export function AddCart({ product, option, user, exchangeRate }: any) {
   const {
@@ -26,6 +27,11 @@ export function AddCart({ product, option, user, exchangeRate }: any) {
   };
 
   const onSubmit = async (data: any) => {
+    const cart = await db.collection('accounts').doc(user.email).collection('cart').get();
+    if (cart.docs.map((doc) => ({ id: doc.id, data: doc.data() })).length > 49) {
+      alert('You can only put less than 50 products in the cart.');
+      return;
+    }
     try {
       // 옵션별 재고 확인 후 업데이트 함수 실행
       if (product?.data?.optioned) {

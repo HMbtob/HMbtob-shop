@@ -12,6 +12,7 @@ export function MyShippingRow({ user, shipping, hiddenAll, exchangeRate }: any) 
   };
   return (
     <div className="border-b border-r border-l w-full border-gray-500">
+      {console.log('shipping', shipping)}
       <div
         className="text-xs place-items-center grid 
       grid-cols-12 grid-flow-col text-center border-b 

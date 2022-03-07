@@ -24,6 +24,7 @@ export function MyShipping({ user, exchangeRate }: any) {
   }, []);
   return (
     <div className="w-full h-full flex justify-center">
+      {console.log('shippings', shippings)}
       <div className="w-11/12 flex-col mt-20">
         <div
           className="w-full text-center my-4 
