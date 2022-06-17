@@ -30,7 +30,8 @@ function App() {
   return (
     <AuthContext.Provider value={authContext}>
       {authContext?.authState?.authUser?.type === 'customer' ||
-      authContext?.authState?.authUser?.type === 'admin' ? (
+      authContext?.authState?.authUser?.type === 'admin' ||
+      authContext?.authState?.authUser?.type === 'Level-1' ? (
         <>
           {isPc && <Header setQuery={setQuery} />}
           {isMobile && <MobileHeader />}

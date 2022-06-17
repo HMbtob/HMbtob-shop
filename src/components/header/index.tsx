@@ -26,7 +26,7 @@ export function Header({ setQuery }: setQueryProps) {
             setQuery('');
             navigate('/');
           }}>
-          INTERASIA
+          HMcompany
         </div>
         <Search
           setQuery={setQuery}

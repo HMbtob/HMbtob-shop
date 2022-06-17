@@ -6,7 +6,7 @@ import {
   newOne,
   preOrderLimitTime,
   toDate,
-  toLocalCurrency,
+  // toLocalCurrency,
   toSalePriceToLocaleCurrency
 } from '../../../utils/orderUtils';
 import { AddCart } from '../../addCart';
@@ -47,11 +47,11 @@ export function PreOrderRow({ product }: any) {
           src={product.data.thumbNail}
           alt="thumbNail"
         />{' '}
-        <div className="col-span-4 z-10 h-full flex flex-col items-center">
+        <div className="col-span-3 z-10 h-full flex flex-col items-center">
           <div className="h-full items-center flex">{product.data.barcode}</div>
           <div className="h-full items-center flex">{product.data.sku}</div>
         </div>
-        <div className="col-span-6 flex flex-row items-center w-full">
+        <div className="col-span-5 flex flex-row items-center w-full">
           {dayGap < 6 && <div className="text-xs text-red-600 font-bold mr-2">NEW</div>}
           {product.data.title}
         </div>
@@ -60,8 +60,9 @@ export function PreOrderRow({ product }: any) {
           <div>{toDate(product.data.preOrderDeadline.seconds)}</div>
           <div className=" font-extrabold text-red-500">{`${day} D, ${hour} H`}</div>
         </div>
-        <div className="col-span-2 ">
-          {!options && (
+        <div className="col-span-2 font-bold">{product.data.stock} EA</div>
+        <div className="col-span-2">
+          {/* {!options && (
             <div className="line-through">
               {toLocalCurrency(
                 product.data.price,
@@ -70,7 +71,7 @@ export function PreOrderRow({ product }: any) {
               )}{' '}
               {user?.currency}
             </div>
-          )}
+          )} */}
           {!options && (
             <div className="font-semibold">
               {toSalePriceToLocaleCurrency(

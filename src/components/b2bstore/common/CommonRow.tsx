@@ -1,7 +1,11 @@
 import { useContext, useEffect, useState } from 'react';
 import { db } from '../../../firebase';
 import { AuthContext } from '../../../hooks/useAuth';
-import { toDate, toLocalCurrency, toSalePriceToLocaleCurrency } from '../../../utils/orderUtils';
+import {
+  toDate,
+  // , toLocalCurrency
+  toSalePriceToLocaleCurrency
+} from '../../../utils/orderUtils';
 import { AddCart } from '../../addCart';
 import { ChevronDoubleDownIcon, ChevronDoubleUpIcon } from '@heroicons/react/solid';
 import { OptionRow } from '../../optionrow';
@@ -42,12 +46,13 @@ export function CommonRow({ product }: any) {
           <div className="h-full items-center flex">{product.data.barcode}</div>
           <div className="h-full items-center flex">{product.data.sku}</div>
         </div>
-        <div className="col-span-7 text-left w-full">
+        <div className="col-span-5 text-left w-full">
           <div>{product.data.title}</div>
         </div>
         <div className="col-span-3 z-10">{toDate(product.data.relDate.seconds)}</div>
+        <div className="col-span-2 z-10 font-bold">{product.data.stock} EA</div>
         <div className="col-span-3 z-10 ">
-          {!options && (
+          {/* {!options && (
             <div className="line-through">
               {toLocalCurrency(
                 product.data.price,
@@ -56,7 +61,7 @@ export function CommonRow({ product }: any) {
               )}{' '}
               {user?.currency}
             </div>
-          )}
+          )} */}
           {!options && (
             <div className="font-semibold">
               {toSalePriceToLocaleCurrency(

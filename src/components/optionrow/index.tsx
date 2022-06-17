@@ -1,6 +1,9 @@
 import { useContext } from 'react';
 import { AuthContext } from '../../hooks/useAuth';
-import { toLocalCurrency, toSalePriceToLocaleCurrency } from '../../utils/orderUtils';
+import {
+  //  toLocalCurrency,
+  toSalePriceToLocaleCurrency
+} from '../../utils/orderUtils';
 import { AddCart } from '../addCart';
 
 export function OptionRow({ option, product, user, exchangeRate }: any) {
@@ -12,14 +15,14 @@ export function OptionRow({ option, product, user, exchangeRate }: any) {
       <div className="col-span-6">{option.data.optionName}</div>
       <div className="col-span-4"></div>
       <div className="col-span-2">
-        <div className="line-through text-sm">
+        {/* <div className="line-through text-sm">
           {toLocalCurrency(
             option.data.optionPrice,
             authContext?.authState.authUser,
             authContext?.authState.exchangeRate
           )}{' '}
           {user?.currency}
-        </div>
+        </div> */}
         <div className="font-semibold text-sm">
           {toSalePriceToLocaleCurrency(
             option.data.optionPrice,

@@ -20,7 +20,7 @@ export function MobileHeader() {
           className="text-gray-200 font-semibold text-left
            mr-10 cursor-pointer w-20 ml-3"
           onClick={() => navigate('/')}>
-          INTERASIA
+          HMcompany
         </div>
       </div>
       {toggleMenu && (

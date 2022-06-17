@@ -58,6 +58,7 @@ export function AddCart({ product, option, user, exchangeRate }: any) {
       }
       //   재고 확인 후 업데이트 함수 실행
       if (Number(product.data.stock) >= data.qty || product.data.limitedStock === false) {
+        console.log('재고 충분, 제한 없음', product);
         cartSet(
           user,
           product,

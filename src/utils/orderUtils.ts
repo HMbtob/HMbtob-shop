@@ -84,36 +84,42 @@ export async function cartSet(
   exchangeRate: any,
   optionId: any = 'none'
 ) {
-  await db
-    .collection('accounts')
-    .doc(user.email)
-    .collection('cart')
-    .doc()
-    .set({
-      barcode: product.data.barcode,
-      canceled: false,
-      category: product.data.category,
-      createdAt: new Date(),
-      currency: user.currency,
-      dcAmount: user.dcAmount[`${product.data.category}A`],
-      dcRate: user.dcRates[product.data.category],
-      exchangeRate: exchangeRate,
-      nickName: user.nickName,
-      preOrderDeadline: product.data.preOrderDeadline,
-      price: toSelePrice(product, optionPrice, user, exchangeRate),
-      productId: product?.id ? product?.id : 'none',
-      optioned: product?.data?.optioned ? product?.data?.optioned : false,
-      optionId: optionId ? optionId : 'none',
-      quan: qty,
-      relDate: product.data.relDate,
-      shipped: false,
-      sku: product.data.sku,
-      title: product.data.title.trim(),
-      totalPrice: toSelePrice(product, optionPrice, user, exchangeRate, qty),
-      totalWeight: product.data.weight * qty,
-      weight: product.data.weight,
-      optionName
-    });
+  try {
+    await db
+      .collection('accounts')
+      .doc(user.email)
+      .collection('cart')
+      .doc()
+      .set({
+        barcode: product.data.barcode,
+        canceled: false,
+        category: product.data.category,
+        createdAt: new Date(),
+        currency: user.currency,
+        dcAmount: user.dcAmount[`${product.data.category}A`],
+        dcRate: user.dcRates[product.data.category],
+        exchangeRate: exchangeRate,
+        nickName: user.nickName,
+        preOrderDeadline: product.data.preOrderDeadline,
+        price: toSelePrice(product, optionPrice, user, exchangeRate),
+        productId: product?.id ? product?.id : 'none',
+        optioned: product?.data?.optioned ? product?.data?.optioned : false,
+        optionId: optionId ? optionId : 'none',
+        quan: qty,
+        relDate: product.data.relDate,
+        shipped: false,
+        sku: product.data.sku,
+        title: product.data.title.trim(),
+        totalPrice: toSelePrice(product, optionPrice, user, exchangeRate, qty),
+        totalWeight: product.data.weight * qty,
+        weight: product.data.weight,
+        addedBy: product?.data?.addedBy || 'admin',
+        addedByOther: product?.data?.addedByOther || false,
+        optionName
+      });
+  } catch (e) {
+    console.log('카트 추가 에러', e);
+  }
 }
 
 // Delete Cart

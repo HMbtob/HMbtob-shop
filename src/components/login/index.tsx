@@ -25,9 +25,9 @@ export function Login() {
       className="flex flex-col bg-gray-100 h-auto min-h-screen w-scree">
       <div className="p-10 lg:p-24 text-center rounded bg-white flex flex-col items-center m-auto w-11/12 lg:w-auto">
         <img
-          src="https://firebasestorage.googleapis.com/v0/b/interasiastock.appspot.com/o/assets%2Finterlogo-500.jpeg?alt=media&token=af2ec17d-dc0b-4147-9c7a-650ab2db870a"
+          src="https://firebasestorage.googleapis.com/v0/b/hmbtob-b093b.appspot.com/o/KakaoTalk_Photo_2022-05-22-16-23-08.png?alt=media&token=9f83fa22-e4d6-4924-b4fc-20e47d0af5ba"
           alt="logo"
-          className="h-40 lg:h-96"
+          className="h-40 lg:h-40"
         />
         <div className="flex flex-col w-11/12 lg:w-80">
           <input
@@ -76,7 +76,7 @@ export function Login() {
           forgot password?
         </div>
         <div className="flex flex-col lg:flex-row mt-5 w-80 justify-start">
-          <div className="text-gray-700">{'New to INTERASIA ?'}</div>
+          <div className="text-gray-700">{'New to HMcompany ?'}</div>
           <button
             onClick={() => navigate('/signup')}
             className=" font-bold cursor-pointer text-gray-800">

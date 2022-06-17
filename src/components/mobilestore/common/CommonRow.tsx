@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../../hooks/useAuth';
 import { toDate, toSalePriceToLocaleCurrency } from '../../../utils/orderUtils';
 import { AddCart } from '../../addCart';
-import { UpdateProduct } from '../updateproduct';
+// import { UpdateProduct } from '../updateproduct';
 import {
   RefreshIcon,
   XCircleIcon,
@@ -155,13 +155,13 @@ export function CommonRow({ product }: any) {
               exchangeRate={authContext?.authState.exchangeRate}
             />
           )}
-          {user?.type === 'admin' && (
+          {/* {user?.type === 'admin' && (
             <UpdateProduct
               product={product}
               user={user}
               exchangeRate={authContext?.authState.exchangeRate}
             />
-          )}
+          )} */}
         </div>
       </div>
 

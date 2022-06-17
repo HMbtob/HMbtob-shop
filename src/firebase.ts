@@ -2,15 +2,16 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: 'AIzaSyCMGH4DZuNILh0yO9VZe-NTDOkEtxljYvk',
-  authDomain: 'interasiastock.firebaseapp.com',
-  projectId: 'interasiastock',
-  storageBucket: 'interasiastock.appspot.com',
-  messagingSenderId: '95854230591',
-  appId: '1:95854230591:web:2e8f7e00323bfe6afa8c8a',
-  measurementId: 'G-K98DZ0SLWY'
-}; //this is where your firebase app values you copied will go
+  apiKey: 'AIzaSyA8luP980mD0i1crITuVd0AcaR1OvyYSJI',
+  authDomain: 'hmbtob-b093b.firebaseapp.com',
+  projectId: 'hmbtob-b093b',
+  storageBucket: 'hmbtob-b093b.appspot.com',
+  messagingSenderId: '172733158451',
+  appId: '1:172733158451:web:8c672fecc7d97696c0ff46',
+  measurementId: 'G-VT17LVMGL4'
+};
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 

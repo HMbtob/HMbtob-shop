@@ -187,10 +187,10 @@ export function CartDefaultAddress({ user, add, exchangeRate }: any) {
               required: { value: true, message: 'Shipping Type is required.' }
             })}
             className="py-1 px-1 border rounded w-4/5 outline-none">
+            <option value="롯데">롯데</option>
+            <option value="퀵">퀵</option>
             <option value="dhl">DHL</option>
-            <option value="EMS">EMS</option>
-            <option value="UMAC(PH)">UMAC(PH)</option>
-            <option value="CJ Logisticd">CJ Logisticd</option>
+            {/* <option value="CJ Logisticd">CJ Logisticd</option> */}
           </select>
           <ErrorMessage
             errors={errors}
