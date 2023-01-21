@@ -4,8 +4,8 @@ import { db } from '../../../firebase';
 import { AuthContext } from '../../../hooks/useAuth';
 import {
   newOne,
-  preOrderLimitTime,
-  toDate,
+  // preOrderLimitTime,
+  // toDate,
   // toLocalCurrency,
   toSalePriceToLocaleCurrency
 } from '../../../utils/orderUtils';
@@ -16,7 +16,7 @@ export function PreOrderRow({ product }: any) {
   const authContext = useContext(AuthContext);
   const user: any = authContext?.authState.authUser;
   const exchangeRate: any = authContext?.authState.exchangeRate;
-  const { day, hour } = preOrderLimitTime(product.data.preOrderDeadline.seconds);
+  // const { day, hour } = preOrderLimitTime(product.data.preOrderDeadline.seconds);
   const { dayGap } = newOne(product.data.createdAt.seconds);
   const [options, setOptions] = useState<any>(null);
   const [hiddenOption, setHiddenOption] = useState<boolean>(false);
@@ -38,6 +38,7 @@ export function PreOrderRow({ product }: any) {
   }, []);
   return (
     <div className="border-b-4 p-1 border-l border-r">
+      {console.log(product.id, 'product.data.relDate', product.data.relDate)}
       <div
         id={product.id}
         className="grid  grid-cols-20 place-items-center text-center 
@@ -55,11 +56,11 @@ export function PreOrderRow({ product }: any) {
           {dayGap < 6 && <div className="text-xs text-red-600 font-bold mr-2">NEW</div>}
           {product.data.title}
         </div>
-        <div className="col-span-2 z-10">{toDate(product.data.relDate.seconds)}</div>
+        {/* <div className="col-span-2 z-10">{toDate(product.data.relDate.seconds)}</div>
         <div className="col-span-2 z-10">
           <div>{toDate(product.data.preOrderDeadline.seconds)}</div>
           <div className=" font-extrabold text-red-500">{`${day} D, ${hour} H`}</div>
-        </div>
+        </div> */}
         <div className="col-span-2 font-bold">{product.data.stock} EA</div>
         <div className="col-span-2">
           {/* {!options && (

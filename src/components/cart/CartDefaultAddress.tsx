@@ -51,6 +51,7 @@ export function CartDefaultAddress({ user, add, exchangeRate }: any) {
         zipcode: data.zipcode
       });
       // 카트 -> 주문으로
+      // todo
       await carts
         .reduce((a: any, c: any) => {
           c.data.addName = addName;
